@@ -10,6 +10,11 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var mongoose = require('mongoose');
+
+var session = require('express-session')
+
+// Se crea la sesion del cliente
+app.use(session({ secret: 'pablitoclavounclavitoenlacalvadeuncalvito', cookie: { maxAge: 60000 }}))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');
