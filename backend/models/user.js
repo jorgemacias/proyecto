@@ -4,15 +4,15 @@ var md5 = require('md5');
 var userSchema =mongoose.Schema({
     username:{
         type:String,
-        index:true
+        index:true,unique:true
             },
     password:{type:String},
-    email:{type:String},
+    email:{type:String,index:true,unique:true},
     name:{type:String},
     age:{type:Number}
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, cb) {
+userSchema.methods.comparePassword = function(candidatePassword) {
     
     if(this.password === md5(candidatePassword)){
         return true;

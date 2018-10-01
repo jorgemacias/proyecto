@@ -4,7 +4,7 @@ var md5 = require('md5');
 
 exports.login_form = function (req, res, next) {
     if (req.session.logueado) {
-        res.redirect('/panel');
+        res.redirect('/users');
     } else {
         res.render('login', {title: 'Login proyecto'});
     }
@@ -12,19 +12,19 @@ exports.login_form = function (req, res, next) {
 
 exports.login_post = function (req, res, next) {
     User.findOne({username: req.body.username}, function (err, user) {
-        if (err)
-            throw err;
-
-        // test a matching password
-        user.comparePassword(req.body.password, function (err, isMatch) {
-            if (err)
-                throw err;
-            if (isMatch) {
-                req.session.logueado = true;
-                res.redirect('/panel');
-            }
-
-        });
+//        if (err)
+//            throw err;
+        
+        valido=user.comparePassword(req.body.password);
+        
+        if (valido === true){
+            req.session.logueado=true;
+            res.render('usuarios/lista', {title: 'Lista de usuarios'});
+        }else{
+            res.render('login', {title: 'Login proyecto'});
+        }
 
     });
+//    console.log(user)
+    
 };
