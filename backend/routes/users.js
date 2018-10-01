@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-var login = require('../controllers/loginController');
+var users = require('../controllers/userController');
 
-router.get('/', login.login_form);
+router.get('/', users.lista);
 
 module.exports = router;
