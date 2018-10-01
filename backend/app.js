@@ -11,7 +11,7 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-var session = require('express-session')
+var session = require('express-session');
 
 // Se crea la sesion del cliente
 app.use(session({secret: 'pablitoclavounclavitoenlacalvadeuncalvito', cookie: {maxAge: 60000}}))
