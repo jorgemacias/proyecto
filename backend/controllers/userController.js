@@ -18,16 +18,30 @@ exports.user_form_get = function (req, res, next) {
     });
 
 };
+exports.user_form_edit_get = function (req, res, next) {
 
+    User.findOne({_id: req.params.id}, function (err, user) {
+        res.render('usuarios/form', {user: user}, function (err, output) {
+            res.send(output);
+        });
+    });
+
+
+};
 exports.user_data_get = function (req, res, next) {
     User.find({}, function (err, users) {
         var userMap = [];
 
         users.forEach(function (user) {
-            userMap.push({id: user._id, data: [user.username, user.name, user.email, user.password]});
+            userMap.push({id: user._id, data: [
+                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="delete(\'' + user._id + '\')"></i>',
+                    '<i class="fa fa-pencil" style="font-size:15px" onclick="edit(\'' + user._id + '\')"></i>',
+                    user.username,
+                    user.name,
+                    user.email,
+                    user.password]});
         });
 
-//        res.send(userMap);
         data = {
             rows: userMap
         };
@@ -37,22 +51,37 @@ exports.user_data_get = function (req, res, next) {
 
 // Handle User create on POST.
 exports.user_create_post = function (req, res) {
-
-    var user = new User({
+    var data = {
         username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: md5(req.body.password)
-    })
-    user.save(function (err, room) {
-        if (err) {
-            res.status(200).send({msg: err.stack});
-        } else {
-            res.json({msg: room._id});
-        }
+    };
+    var user = new User(data);
 
-        // saved!
-    });
+    if (req.body.id !== "") {
+        User.findById(req.body.id, function (err, user) {
+            if (err)
+                return handleError(err);
+
+            user.set(data);
+            user.save(function (err, updatedUser) {
+                if (err)
+                    return handleError(err);
+                res.json({msg: updatedUser._id});
+            });
+        });
+    } else {
+        user.save(function (err, room) {
+            if (err) {
+                res.status(200).send({msg: err.stack});
+            } else {
+                res.json({msg: room._id});
+            }
+        });
+    }
+
+
 
 
 };

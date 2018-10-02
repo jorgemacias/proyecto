@@ -1,22 +1,23 @@
 <div class="container">
     <form action="/users/create" method="post" id="form-user">
+        <input type="hidden" value="{{ user._id ? user._id:"" }}" name="id">
         <div class="form-group mb-2">
             <label for="staticEmail2" >Nombre de usuario</label>
-            <input type="text" class="form-control-plaintext" id="username" value="" name="username" placeholder="Escriba el nombre de usuario" required>
+            <input type="text" class="form-control-plaintext" id="username" value="{{ user.username ? user.username:"" }}" name="username" placeholder="Escriba el nombre de usuario" required>
         </div>
         <div class="form-group mb-2">
             <label for="staticEmail2" >Nombre</label>
-            <input type="text" class="form-control-plaintext" id="name" value="" name="name" placeholder="Escriba su nombre" required>
+            <input type="text" class="form-control-plaintext" id="name" value="{{ user.username ? user.name:"" }}" name="name" placeholder="Escriba su nombre" required>
         </div>
         <div class="form-group mb-2">
-            <label for="staticEmail2" >Email</label>
-            <input type="email" class="form-control-plaintext" id="password" value="" name="email" placeholder="Escriba contraseña" required>
+            <label for="email" >Email</label>
+            <input type="email" class="form-control-plaintext" id="email" value="{{ user.username ? user.email:"" }}" name="email" placeholder="Escriba contraseña" required>
         </div>
         <div class="form-group mb-2">
-            <label for="inputPassword2">Contraseña</label>
-            <input type="password" class="form-control-plaintext" id="inputPassword2" name="password" placeholder="Password" required>
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control-plaintext" id="password" value="{{ user.username ? user.password:"" }}" name="password" placeholder="Password" required>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Agregar</button>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
 </div>
 

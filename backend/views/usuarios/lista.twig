@@ -19,27 +19,32 @@
     </div>
     <script>
         var myGrid;
+        function edit(id) {
+            Modal('/users/form/' + id, 'Editar registro', 800);
+        }
+
         $(function () {
 
             $("#btnNew").on('click', function () {
-                Modal('/users/form', 'Nuevo registro', 800)
+                Modal('/users/form', 'Nuevo registro', 800);
             });
 
         });
 
-
         myGrid = new dhtmlXGridObject('gridbox');
         myGrid.setImagePath("dhtmlx/codebase/imgs/");
-        myGrid.setHeader("Nombre de usuario,Nombre,Email,Password");
-        myGrid.attachHeader("#text_filter,#text_filter,#text_filter,#text_filter");
-        myGrid.setInitWidths("*,*,*,*");
+        myGrid.setHeader("Borrar,Editar,Nombre de usuario,Nombre,Email,Password");
+        myGrid.attachHeader("#cspan", "#cspan", "#text_filter,#text_filter,#text_filter,#text_filter");
+        myGrid.setInitWidths("50,50,*,*,*,*");
         myGrid.enableAutoWidth(true);
-        myGrid.setColAlign("left,center,left,left");
-        myGrid.setColTypes("ro,ro,ro,ro");
-        myGrid.setColSorting("na,na,str,str");
+        myGrid.setColAlign("center,center,left,center,left,left");
+        myGrid.setColTypes("ro,ro,ro,ro,ro,ro");
+        myGrid.setColSorting("na,na,str,str,str,str");
         myGrid.init();
         myGrid.enableSmartRendering(true);
         myGrid.load("/users/data", "json");
+
+
 
     </script>
 {% endblock %}
