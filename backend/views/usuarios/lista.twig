@@ -23,6 +23,19 @@
             Modal('/users/form/' + id, 'Editar registro', 800);
         }
 
+        function del(id) {
+            Question("¿Desea borrar?", function () {
+                Loading();
+                $.get("/users/delete/" + id, function (data) {
+                    Ready();
+                    OK("Borrado");
+                    myGrid.clearAll();
+                    myGrid.load("/users/data", "json");
+                });
+            });
+
+        }
+
         $(function () {
 
             $("#btnNew").on('click', function () {

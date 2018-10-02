@@ -4,11 +4,11 @@ var md5 = require('md5');
 
 
 exports.lista = function (req, res, next) {
-    if (req.session.logueado) {
-        res.render('usuarios/lista', {title: 'Lista de usaurios'});
-    } else {
-        res.redirect('/');
-    }
+//    if (req.session.logueado) {
+    res.render('usuarios/lista', {title: 'Lista de usaurios'});
+//    } else {
+//        res.redirect('/');
+//    }
 
 };
 
@@ -18,6 +18,7 @@ exports.user_form_get = function (req, res, next) {
     });
 
 };
+
 exports.user_form_edit_get = function (req, res, next) {
 
     User.findOne({_id: req.params.id}, function (err, user) {
@@ -26,15 +27,26 @@ exports.user_form_edit_get = function (req, res, next) {
         });
     });
 
+};
+exports.user_delete_get = function (req, res, next) {
+
+    User.remove({_id: req.params.id}, function (err) {
+        if (!err) {
+            res.json({msg:'Borrado'});
+        } else {
+            res.json({msg:'Ocurrio un error al borrar'});
+        }
+    });
 
 };
+
 exports.user_data_get = function (req, res, next) {
     User.find({}, function (err, users) {
         var userMap = [];
 
         users.forEach(function (user) {
             userMap.push({id: user._id, data: [
-                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="delete(\'' + user._id + '\')"></i>',
+                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del(\'' + user._id + '\')"></i>',
                     '<i class="fa fa-pencil" style="font-size:15px" onclick="edit(\'' + user._id + '\')"></i>',
                     user.username,
                     user.name,
