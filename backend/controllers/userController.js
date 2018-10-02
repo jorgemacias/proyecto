@@ -5,10 +5,17 @@ var md5 = require('md5');
 
 exports.lista = function (req, res, next) {
     if (req.session.logueado) {
-    res.render('usuarios/lista', {title: 'Lista de usaurios'});
+        res.render('usuarios/lista', {title: 'Lista de usaurios'});
     } else {
         res.redirect('/');
     }
+
+};
+
+exports.user_form_get = function (req, res, next) {
+    res.render('usuarios/form', {session: req.session, layout: null}, function (err, output) {
+        res.send(output);
+    });
 
 };
 
