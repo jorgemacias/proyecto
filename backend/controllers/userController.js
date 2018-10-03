@@ -32,9 +32,9 @@ exports.user_delete_get = function (req, res, next) {
 
     User.remove({_id: req.params.id}, function (err) {
         if (!err) {
-            res.json({msg:'Borrado'});
+            res.json({msg: 'Borrado'});
         } else {
-            res.json({msg:'Ocurrio un error al borrar'});
+            res.json({msg: 'Ocurrio un error al borrar'});
         }
     });
 
@@ -66,9 +66,13 @@ exports.user_create_post = function (req, res) {
     var data = {
         username: req.body.username,
         name: req.body.name,
-        email: req.body.email,
-        password: md5(req.body.password)
+        email: req.body.email
     };
+
+    if (req.body.password !== '') {
+        data.password=md5(req.body.password);
+    }
+
     var user = new User(data);
 
     if (req.body.id !== "") {
