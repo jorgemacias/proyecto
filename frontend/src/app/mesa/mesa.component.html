@@ -1,0 +1,9 @@
+<h2>Listado de mesas</h2>
+<ul class="mesas">
+  <li *ngFor="let mesa of mesas"
+      [class.selected]="mesa === selectedMesa"
+      (click)="onSelect(mesa)">
+    <span class="badge">{{mesa.id}}</span> {{mesa.descripcion}}
+  </li>
+</ul>
+<app-mesa-detalle [mesa]="selectedMesa"></app-mesa-detalle>

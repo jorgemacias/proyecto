@@ -1,0 +1,12 @@
+<div *ngIf="mesa">
+
+  <h2>{{mesa.descripcion | uppercase}} Detalle</h2>
+  <div><span>id: </span>{{mesa.id}}</div>
+  <div>
+    <label>
+      Descripción:
+      <input [(ngModel)]="mesa.descripcion" placeholder="Descripción" />
+    </label>
+  </div>
+
+</div>

@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\mesa",
+    "\\src\\app\\messages",
+    "\\src\\assets",
+    "\\src\\environments"
+  ],
+  "PreviewInSolutionExplorer": false
+}

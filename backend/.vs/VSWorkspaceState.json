@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\controllers",
+    "\\models",
+    "\\routes",
+    "\\views",
+    "\\views\\usuarios"
+  ],
+  "SelectedNode": "\\views\\usuarios\\lista.twig",
+  "PreviewInSolutionExplorer": false
+}

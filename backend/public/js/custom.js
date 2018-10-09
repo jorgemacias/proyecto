@@ -55,7 +55,6 @@ function Modal(url, title, width, fn) {
         Dismiss();
     });
     $('#myModalLabel').text(title);
-    $('#modal-dialog').animate({'width': width}, 500);
     
     if ($('#myModal').is(':visible')) {
         Loading();

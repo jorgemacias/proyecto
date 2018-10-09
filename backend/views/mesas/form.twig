@@ -1,0 +1,29 @@
+<div class="container">
+    <form action="/mesas/create" method="post" id="form-mesa">
+        <input type="hidden" value="{{ mesa._id ? mesa._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="staticEmail2" >Descripción de la mesa</label>
+            <input type="text" class="form-control-plaintext" id="descripcion" value="{{ mesa.descripcion ? mesa.descripcion:"" }}" name="descripcion" placeholder="Descripción de la mesa" required>
+        </div>
+        <div class="form-group mb-2">
+            <label for="staticEmail2" >Número de mesa</label>
+            <input type="number" class="form-control" id="numero" value="{{ mesa.numero ? mesa.numero:"" }}" name="numero" placeholder="Número de la mesa" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form-mesa').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form-mesa").reset();
+            myGrid.clearAll();
+            myGrid.load("/mesas/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>

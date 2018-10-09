@@ -1,18 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { AppComponent } from './app.component';
-import { ComidaComponent } from './comida/comida.component';
+import { MesaComponent } from './mesa/mesa.component';
+import { MesaDetalleComponent } from './mesa-detalle/mesa-detalle.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ComidaComponent
+    MesaComponent,
+    MesaDetalleComponent,
+    MessagesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
-})
+}) 
+
 export class AppModule { }
