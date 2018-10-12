@@ -58,12 +58,12 @@ exports.restaurante_form_get = function (req, res, next) {
                                     caracteristicas_inmueble: caracteristicas_inmueble,
                                     caracteristicas_servicios: caracteristicas_servicios,
                                     condiciones_list: condiciones_list,
-                                    formas_pago:formas_pago
+                                    formas_pago: formas_pago
                                 }, function (err, output) {
                                     res.send(output);
                                 });
                             });
-                            
+
                         });
 
                     });
@@ -111,6 +111,7 @@ exports.restaurante_delete_get = function (req, res, next) {
 
 exports.restaurante_data_get = function (req, res, next) {
     Restaurante.find({}, function (err, restaurantes) {
+        console.log(restaurantes);
         var restauranteMap = [];
 
         restaurantes.forEach(function (restaurante) {
@@ -119,7 +120,7 @@ exports.restaurante_data_get = function (req, res, next) {
                     '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del(\'' + restaurante._id + '\')"></i>',
                     '<i class="fa fa-pencil" style="font-size:15px" onclick="edit(\'' + restaurante._id + '\')"></i>',
                     restaurante.nombre,
-                    restaurante.categoriasRestaurante.join(','),
+                    restaurante.categorias.join(','),
                     restaurante.tiposComida.join(',')]
             });
         });
@@ -132,6 +133,23 @@ exports.restaurante_data_get = function (req, res, next) {
 };
 
 exports.restaurante_create_post = function (req, res) {
+    var nombre_logo="";
+    console.log(req.body);
+//    if (req.files) {
+//        let logo = req.files.logo;
+//        nombre_logo = "";
+//        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//
+//        for (var i = 0; i < 5; i++)
+//            nombre_logo += possible.charAt(Math.floor(Math.random() * possible.length));
+//        logo.mv('C:\Users\IMUG\curso\equipo2\proyecto\backend\archivos\/logos\/' + nombre_logo + '.jpg', function (err) {
+//            if (err)
+//                return res.status(500).send(err);
+//        });
+//    }
+
+
+
     var domicilio = {
         calle: req.body.calle,
         numero: req.body.numero,
@@ -144,8 +162,8 @@ exports.restaurante_create_post = function (req, res) {
 
     var data = {
         nombre: req.body.nombre,
-        categoriasRestaurante: req.body.categoriasRestaurante,
-        tiposComida: req.body.tiposComida,
+        categorias: req.body.categorias,
+        tiposComida: req.body.tipos,
         precioMasBajo: req.body.precioMasBajo,
         precioMasAlto: req.body.precioMasAlto,
         domicilio: domicilio,
@@ -155,8 +173,7 @@ exports.restaurante_create_post = function (req, res) {
         caracteristicasAreas: req.body.caracteristicasAreas,
         caracteristicasAceptacion: req.body.caracteristicasAceptacion,
         caracteristicasInmueble: req.body.caracteristicasInmueble,
-        logotipo: req.body.logotipo,
-        diasOperacion: req.body.diasOperacion
+        logotipo: nombre_logo+'.jpg'
     };
 
     var restaurante = new Restaurante(data);

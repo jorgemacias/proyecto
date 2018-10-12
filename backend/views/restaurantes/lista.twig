@@ -46,13 +46,13 @@
 
         myGrid = new dhtmlXGridObject('gridbox');
         myGrid.setImagePath("dhtmlx/codebase/imgs/");
-        myGrid.setHeader("Borrar,Editar,Nombre");
-        myGrid.attachHeader("#cspan", "#cspan", "#text_filter");
-        myGrid.setInitWidths("50,50,*");
+        myGrid.setHeader("Borrar,Editar,Nombre,Categorias");
+        myGrid.attachHeader("#cspan", "#cspan", "#text_filter","#text_filter");
+        myGrid.setInitWidths("50,50,*,*");
         myGrid.enableAutoWidth(true);
-        myGrid.setColAlign("center,center,left");
-        myGrid.setColTypes("ro,ro,ro");
-        myGrid.setColSorting("na,na,str");
+        myGrid.setColAlign("center,center,left,CENTER");
+        myGrid.setColTypes("ro,ro,ro,ro");
+        myGrid.setColSorting("na,na,str,str");
         myGrid.init();
         myGrid.enableSmartRendering(true);
         myGrid.load("/restaurantes/data", "json");

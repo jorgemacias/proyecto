@@ -1,4 +1,5 @@
 var createError = require('http-errors');
+const fileUpload = require('express-fileupload');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -17,6 +18,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 
 // Se crea la sesion del cliente
+app.use(fileUpload());
 app.use(session({secret: 'pablitoclavounclavitoenlacalvadeuncalvito', cookie: {maxAge: 60000}}))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
