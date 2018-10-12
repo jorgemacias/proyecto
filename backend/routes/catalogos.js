@@ -5,6 +5,7 @@ var categoriaRestaurante = require('../controllers/catalogos/categoriaRestaurant
 var tipoComida = require('../controllers/catalogos/tiposComidaController');
 var caracteristicaVenta = require('../controllers/catalogos/caracteristicasVentaController');
 var caracteristicaInmueble = require('../controllers/catalogos/caracteristicasInmuebleController');
+var caracteristicaServicios = require('../controllers/catalogos/caracteristicasServiciosController');
 
 router.get('/categorias_restaurante/', categoriaRestaurante.lista);
 router.post('/categorias_restaurante/create', categoriaRestaurante.categoria_create_post);
@@ -33,4 +34,12 @@ router.get('/caracteristicas_inmueble/data', caracteristicaInmueble.data_get);
 router.get('/caracteristicas_inmueble/form', caracteristicaInmueble.form_get);
 router.get('/caracteristicas_inmueble/form/:id', caracteristicaInmueble.edit_get);
 router.get('/caracteristicas_inmueble/delete/:id', caracteristicaInmueble.delete_get);
+
+router.get('/caracteristicas_servicios/', caracteristicaServicios.lista);
+router.post('/caracteristicas_servicios/create', caracteristicaServicios.create_post);
+router.get('/caracteristicas_servicios/data', caracteristicaServicios.data_get);
+router.get('/caracteristicas_servicios/form', caracteristicaServicios.form_get);
+router.get('/caracteristicas_servicios/form/:id', caracteristicaServicios.edit_get);
+router.get('/caracteristicas_servicios/delete/:id', caracteristicaServicios.delete_get);
+
 module.exports = router;

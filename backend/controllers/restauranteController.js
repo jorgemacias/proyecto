@@ -4,6 +4,7 @@ var tiposComida = require('../models/catalogos/tipos_comida');
 var categoriasRestaurante = require('../models/catalogos/categorias_restaurante');
 var categoriasVenta = require('../models/catalogos/caracteristicas_venta');
 var caracteristicasInmueble = require('../models/catalogos/caracteristicas_inmueble');
+var caracteristicasServicios = require('../models/catalogos/caracteristicas_servicios');
 
 exports.lista = function (req, res, next) {
     res.render('restaurantes/lista', {title: 'Lista de restaurantes'});
@@ -14,7 +15,8 @@ exports.restaurante_form_get = function (req, res, next) {
     categorias_restaurante = [];
     categorias_venta = [];
     caracteristicas_inmueble = [];
-    
+    caracteristicas_servicios = [];
+
     tiposComida.find({}, function (err, tipos) {
         tipos.forEach(function (tipo) {
             tipos_comida.push(tipo);
@@ -31,8 +33,13 @@ exports.restaurante_form_get = function (req, res, next) {
                     caracteristicas_Inmueble.forEach(function (caracteristicas_in) {
                         caracteristicas_inmueble.push(caracteristicas_in);
                     });
-                    res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante, categorias_venta: categorias_venta,caracteristicas_inmueble:caracteristicas_inmueble}, function (err, output) {
-                        res.send(output);
+                    caracteristicasServicios.find({}, function (err, caracteristicas_Servicios) {
+                        caracteristicas_Servicios.forEach(function (caracteristicas_Ser) {
+                            caracteristicas_servicios.push(caracteristicas_Ser);
+                        });
+                        res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante, categorias_venta: categorias_venta, caracteristicas_inmueble: caracteristicas_inmueble,caracteristicas_servicios:caracteristicas_servicios}, function (err, output) {
+                            res.send(output);
+                        });
                     });
                 });
 
