@@ -1,0 +1,25 @@
+<div class="container">
+    <form action="/restaurantes/create" method="post" id="form-restaurante">
+        <input type="hidden" value="{{ restaurante._id ? restaurante._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="nombreRestaurante" >Nombre del restaurante</label>
+            <input type="text" class="form-control-plaintext" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="nombre" placeholder="Nombre del restaurante" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form-mesa').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form-restaurante").reset();
+            myGrid.clearAll();
+            myGrid.load("/restaurantes/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>

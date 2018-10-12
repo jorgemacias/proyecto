@@ -3,10 +3,13 @@
     "",
     "\\controllers",
     "\\models",
+    "\\public",
+    "\\public\\js",
     "\\routes",
     "\\views",
+    "\\views\\mesas",
     "\\views\\usuarios"
   ],
-  "SelectedNode": "\\views\\usuarios\\lista.twig",
+  "SelectedNode": "\\controllers\\restauranteController.js",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,25 @@
+<div class="container">
+    <form action="/catalogos/tipos_comida/create" method="post" id="form">
+        <input type="hidden" value="{{ tipo._id ? tipo._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="nombre" >Nombre del tipo de comida</label>
+            <input type="text" class="form-control-plaintext" id="nombre" value="{{ tipo.nombre ? tipo.nombre:"" }}" name="nombre" placeholder="Escriba el nombre del tipo de comida" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form").reset();
+            myGrid.clearAll();
+            myGrid.load("/catalogos/tipos_comida/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>

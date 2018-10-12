@@ -1,0 +1,25 @@
+<div class="container">
+    <form action="/catalogos/categorias_restaurante/create" method="post" id="form-categoria">
+        <input type="hidden" value="{{ categoria._id ? categoria._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="nombreCategoria" >Nombre de la categoria</label>
+            <input type="text" class="form-control-plaintext" id="nombreCategoria" value="{{ categoria.nombre ? categoria.nombre:"" }}" name="nombre" placeholder="Nombre de la categoria" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form-categoria').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form-categoria").reset();
+            myGrid.clearAll();
+            myGrid.load("/catalogos/categorias_restaurante/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>
