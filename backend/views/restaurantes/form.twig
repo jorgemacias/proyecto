@@ -105,7 +105,19 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="tab-pane fade" id="condiciones" role="tabpanel" aria-labelledby="condiciones-tab">...</div>
+            <div class="tab-pane fade" id="condiciones" role="tabpanel" aria-labelledby="condiciones-tab">
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Condiciones de servicio</label>
+                    </div>
+                    {% for condiciones in condiciones_list %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="caracteristicasAceptacion[]" type="checkbox" id="condiciones-{{condiciones._id}}}" value="{{condiciones._id}}">
+                            <label class="form-check-label" for="condiciones-{{condiciones._id}}}">{{condiciones.nombre}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">...</div>
             <div class="tab-pane fade" id="caracteristicasVentas" role="tabpanel" aria-labelledby="caracteristicasVentas-tab">
                 <div class="form-group mb-2">

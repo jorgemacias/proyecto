@@ -1,0 +1,25 @@
+<div class="container">
+    <form action="/catalogos/condiciones/create" method="post" id="form">
+        <input type="hidden" value="{{ condicion._id ? condicion._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="nombre" >Descripción de la condición</label>
+            <input type="text" class="form-control" id="nombre" value="{{ condicion.nombre ? condicion.nombre:"" }}" name="nombre" placeholder="" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form").reset();
+            myGrid.clearAll();
+            myGrid.load("/catalogos/condiciones/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>

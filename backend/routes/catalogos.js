@@ -6,6 +6,7 @@ var tipoComida = require('../controllers/catalogos/tiposComidaController');
 var caracteristicaVenta = require('../controllers/catalogos/caracteristicasVentaController');
 var caracteristicaInmueble = require('../controllers/catalogos/caracteristicasInmuebleController');
 var caracteristicaServicios = require('../controllers/catalogos/caracteristicasServiciosController');
+var condiciones = require('../controllers/catalogos/condicionesController');
 
 router.get('/categorias_restaurante/', categoriaRestaurante.lista);
 router.post('/categorias_restaurante/create', categoriaRestaurante.categoria_create_post);
@@ -42,4 +43,10 @@ router.get('/caracteristicas_servicios/form', caracteristicaServicios.form_get);
 router.get('/caracteristicas_servicios/form/:id', caracteristicaServicios.edit_get);
 router.get('/caracteristicas_servicios/delete/:id', caracteristicaServicios.delete_get);
 
+router.get('/condiciones/', condiciones.lista);
+router.post('/condiciones/create', condiciones.create_post);
+router.get('/condiciones/data', condiciones.data_get);
+router.get('/condiciones/form', condiciones.form_get);
+router.get('/condiciones/form/:id', condiciones.edit_get);
+router.get('/condiciones/delete/:id', condiciones.delete_get);
 module.exports = router;
