@@ -3,6 +3,7 @@ var Restaurante = require('../models/restaurante');
 var tiposComida = require('../models/catalogos/tipos_comida');
 var categoriasRestaurante = require('../models/catalogos/categorias_restaurante');
 var categoriasVenta = require('../models/catalogos/caracteristicas_venta');
+var caracteristicasInmueble = require('../models/catalogos/caracteristicas_inmueble');
 
 exports.lista = function (req, res, next) {
     res.render('restaurantes/lista', {title: 'Lista de restaurantes'});
@@ -12,6 +13,8 @@ exports.restaurante_form_get = function (req, res, next) {
     tipos_comida = [];
     categorias_restaurante = [];
     categorias_venta = [];
+    caracteristicas_inmueble = [];
+    
     tiposComida.find({}, function (err, tipos) {
         tipos.forEach(function (tipo) {
             tipos_comida.push(tipo);
@@ -24,9 +27,15 @@ exports.restaurante_form_get = function (req, res, next) {
                 categoriasventa.forEach(function (categoriaventa) {
                     categorias_venta.push(categoriaventa);
                 });
-                res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante,categorias_venta: categorias_venta}, function (err, output) {
-                    res.send(output);
+                caracteristicasInmueble.find({}, function (err, caracteristicas_Inmueble) {
+                    caracteristicas_Inmueble.forEach(function (caracteristicas_in) {
+                        caracteristicas_inmueble.push(caracteristicas_in);
+                    });
+                    res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante, categorias_venta: categorias_venta,caracteristicas_inmueble:caracteristicas_inmueble}, function (err, output) {
+                        res.send(output);
+                    });
                 });
+
             });
         });
     });

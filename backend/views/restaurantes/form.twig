@@ -7,7 +7,7 @@
                 <a class="nav-link active" id="generales-tab" data-toggle="tab" href="#generales" role="tab" aria-controls="generales" aria-selected="true">Generales</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="caracteristicasInmueble-tab" data-toggle="tab" href="#caracteristicasInmueble" role="tab" aria-controls="caracteristicasInmueble" aria-selected="false">Caracteristicas del inmueble</a>
+                <a class="nav-link" id="caracteristicasInmueble-tab" data-toggle="tab" href="#caracteristicasInmueble" role="tab" aria-controls="caracteristicasInmueble" aria-selected="false">Inmueble</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="caracteristicasVentas-tab" data-toggle="tab" href="#caracteristicasVentas" role="tab" aria-controls="caracteristicasVentas" aria-selected="false">Opciones de venta</a>
@@ -79,7 +79,19 @@
                     <input type="text" class="form-control" id="Pais" value="{{ restaurante.pais ? restaurante.pais:"" }}" name="pais" placeholder="" required>
                 </div>
             </div>
-            <div class="tab-pane fade" id="caracteristicasInmueble" role="tabpanel" aria-labelledby="caracteristicasInmueble-tab">...</div>
+            <div class="tab-pane fade" id="caracteristicasInmueble" role="tabpanel" aria-labelledby="caracteristicasInmueble-tab">
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Seleccione las características de su restaurante</label>
+                    </div>
+                    {% for caracteristica_inmueble in caracteristicas_inmueble %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="caracteristicasInmueble[]" type="checkbox" id="caracteristica_inmueble-{{caracteristica_inmueble._id}}}" value="{{caracteristica_inmueble._id}}">
+                            <label class="form-check-label" for="caracteristica_inmueble-{{caracteristica_inmueble._id}}}">{{caracteristica_inmueble.nombre}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="tab-pane fade" id="servicios" role="tabpanel" aria-labelledby="servicios-tab">...</div>
             <div class="tab-pane fade" id="condiciones" role="tabpanel" aria-labelledby="condiciones-tab">...</div>
             <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">...</div>
