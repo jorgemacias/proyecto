@@ -3,19 +3,19 @@
         <input type="hidden" value="{{ user._id ? user._id:"" }}" name="id">
         <div class="form-group mb-2">
             <label for="staticEmail2" >Nombre de usuario</label>
-            <input type="text" class="form-control-plaintext" id="username" value="{{ user.username ? user.username:"" }}" name="username" placeholder="Escriba el nombre de usuario" required>
+            <input type="text" class="form-control" id="username" value="{{ user.username ? user.username:"" }}" name="username" placeholder="Escriba el nombre de usuario" required>
         </div>
         <div class="form-group mb-2">
             <label for="staticEmail2" >Nombre</label>
-            <input type="text" class="form-control-plaintext" id="name" value="{{ user.username ? user.name:"" }}" name="name" placeholder="Escriba su nombre" required>
+            <input type="text" class="form-control" id="name" value="{{ user.username ? user.name:"" }}" name="name" placeholder="Escriba su nombre" required>
         </div>
         <div class="form-group mb-2">
             <label for="email" >Email</label>
-            <input type="email" class="form-control-plaintext" id="email" value="{{ user.username ? user.email:"" }}" name="email" placeholder="Escriba contraseña" required>
+            <input type="email" class="form-control" id="email" value="{{ user.username ? user.email:"" }}" name="email" placeholder="Escriba contraseña" required>
         </div>
         <div class="form-group mb-2">
             <label for="password">Contraseña</label>
-            <input type="password" class="form-control-plaintext" id="password" value="" name="password" placeholder="Password" {{ not user._id ? "required":"" }}>
+            <input type="password" class="form-control" id="password" value="" name="password" placeholder="Password" {{ not user._id ? "required":"" }}>
         </div>
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>

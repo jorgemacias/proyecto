@@ -2,6 +2,7 @@
 var Restaurante = require('../models/restaurante');
 var tiposComida = require('../models/catalogos/tipos_comida');
 var categoriasRestaurante = require('../models/catalogos/categorias_restaurante');
+var categoriasVenta = require('../models/catalogos/caracteristicas_venta');
 
 exports.lista = function (req, res, next) {
     res.render('restaurantes/lista', {title: 'Lista de restaurantes'});
@@ -10,6 +11,7 @@ exports.lista = function (req, res, next) {
 exports.restaurante_form_get = function (req, res, next) {
     tipos_comida = [];
     categorias_restaurante = [];
+    categorias_venta = [];
     tiposComida.find({}, function (err, tipos) {
         tipos.forEach(function (tipo) {
             tipos_comida.push(tipo);
@@ -18,8 +20,13 @@ exports.restaurante_form_get = function (req, res, next) {
             categorias.forEach(function (categoria) {
                 categorias_restaurante.push(categoria);
             });
-            res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante}, function (err, output) {
-                res.send(output);
+            categoriasVenta.find({}, function (err, categoriasventa) {
+                categoriasventa.forEach(function (categoriaventa) {
+                    categorias_venta.push(categoriaventa);
+                });
+                res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante,categorias_venta: categorias_venta}, function (err, output) {
+                    res.send(output);
+                });
             });
         });
     });
@@ -28,6 +35,8 @@ exports.restaurante_form_get = function (req, res, next) {
 };
 
 exports.restaurante_form_edit_get = function (req, res, next) {
+    tipos_comida = [];
+    categorias_restaurante = [];
     tiposComida.find({}, function (err, tipos) {
         tipos.forEach(function (tipo) {
             tipos_comida.push(tipo);

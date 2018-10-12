@@ -1,9 +1,9 @@
 <div class="container">
-    <form action="/catalogos/tipos_comida/create" method="post" id="form">
-        <input type="hidden" value="{{ tipo._id ? tipo._id:"" }}" name="id">
+    <form action="/catalogos/caracteristicas_venta/create" method="post" id="form">
+        <input type="hidden" value="{{ caracteristica._id ? caracteristica._id:"" }}" name="id">
         <div class="form-group mb-2">
-            <label for="nombre" >Nombre del tipo de comida</label>
-            <input type="text" class="form-control" id="nombre" value="{{ tipo.nombre ? tipo.nombre:"" }}" name="nombre" placeholder="Escriba el nombre del tipo de comida" required>
+            <label for="nombre" >Descripción</label>
+            <input type="text" class="form-control" id="nombre" value="{{ caracteristica.nombre ? caracteristica.nombre:"" }}" name="nombre" placeholder="Describa la caráteristica de la venta" required>
         </div>
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
@@ -16,7 +16,7 @@
         $.post($(this).attr('action'), $(this).serialize(), function (data) {
             document.getElementById("form").reset();
             myGrid.clearAll();
-            myGrid.load("/catalogos/tipos_comida/data", "json");
+            myGrid.load("/catalogos/caracteristicas_venta/data", "json");
             CloseModal()
         }).fail(function (err) {
             console.error("ocurrio un error" + err.msg)

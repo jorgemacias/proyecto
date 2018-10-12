@@ -1,4 +1,4 @@
-{% extends '../layout.twig' %}
+{% extends '../../layout.twig' %}
 {% block style %}
     <style>
 
@@ -7,7 +7,7 @@
 {% block body %}
     <div class="row">
 
-        <h3>Lista de restaurantes</h3>
+        <h3>Opciones de venta</h3>
     </div>
 
 
@@ -20,17 +20,17 @@
     <script>
         var myGrid;
         function edit(id) {
-            Modal('/restaurantes/form/' + id, 'Editar registro', 1100);
+            Modal('/catalogos/caracteristicas_venta/form/' + id, 'Editar registro', 800);
         }
 
         function del(id) {
             Question("¿Desea borrar?", function () {
                 Loading();
-                $.get("/restaurantes/delete/" + id, function (data) {
+                $.get("/catalogos/caracteristicas_venta/delete/" + id, function (data) {
                     Ready();
                     OK("Borrado");
                     myGrid.clearAll();
-                    myGrid.load("/restaurantes/data", "json");
+                    myGrid.load("/catalogos/caracteristicas_venta/data", "json");
                 });
             });
 
@@ -39,7 +39,7 @@
         $(function () {
 
             $("#btnNew").on('click', function () {
-                Modal('/restaurantes/form', 'Nuevo registro', 1100);
+                Modal('/catalogos/caracteristicas_venta/form', 'Nuevo registro', 800);
             });
 
         });
@@ -55,7 +55,7 @@
         myGrid.setColSorting("na,na,str");
         myGrid.init();
         myGrid.enableSmartRendering(true);
-        myGrid.load("/restaurantes/data", "json");
+        myGrid.load("/catalogos/caracteristicas_venta/data", "json");
 
 
 

@@ -2,32 +2,103 @@
 <div class="container">
     <form action="/restaurantes/create" method="post" id="form-restaurante">
         <input type="hidden" value="{{ restaurante._id ? restaurante._id:"" }}" name="id">
-        <div class="form-group mb-2">
-            <label for="nombreRestaurante" >Nombre del restaurante</label>
-            <input type="text" class="form-control-plaintext" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="nombre" placeholder="Nombre del restaurante" required>
-        </div>
-        <div class="form-group mb-2">
-            <div>
-                <label class="label" >Categorías de restaurante</label>
-            </div>
-            {% for categoria in categorias %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="categorias[]" type="checkbox" id="categoria-{{categoria._id}}}" value="{{categoria._id}}">
-                    <label class="form-check-label" for="categoria-{{categoria._id}}}">{{categoria.nombre}}</label>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="generales-tab" data-toggle="tab" href="#generales" role="tab" aria-controls="generales" aria-selected="true">Generales</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="caracteristicasInmueble-tab" data-toggle="tab" href="#caracteristicasInmueble" role="tab" aria-controls="caracteristicasInmueble" aria-selected="false">Caracteristicas del inmueble</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="caracteristicasVentas-tab" data-toggle="tab" href="#caracteristicasVentas" role="tab" aria-controls="caracteristicasVentas" aria-selected="false">Opciones de venta</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="servicios-tab" data-toggle="tab" href="#servicios" role="tab" aria-controls="servicios" aria-selected="false">Servicios / areas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="condiciones-tab" data-toggle="tab" href="#condiciones" role="tab" aria-controls="condiciones" aria-selected="false">Condiciones</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="formas_pago-tab" data-toggle="tab" href="#formas_pago" role="tab" aria-controls="formas_pago" aria-selected="false">Formas de pago</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="generales" role="tabpanel" aria-labelledby="generales-tab">
+                <div class="form-group mb-2">
+                    <label for="nombreRestaurante" >Nombre del restaurante</label>
+                    <input type="text" class="form-control" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="nombre" placeholder="Nombre del restaurante" required>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="form-group mb-2">
-            <div>
-                <label class="label" >Tipos de comida ofertados</label>
-            </div>
-            {% for tipo in tipos %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="tipos[]" type="checkbox" id="tipo-{{tipo._id}}}" value="{{tipo._id}}">
-                    <label class="form-check-label" for="tipo-{{tipo._id}}}">{{tipo.nombre}}</label>
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Categorías de restaurante</label>
+                    </div>
+                    {% for categoria in categorias %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="categorias[]" type="checkbox" id="categoria-{{categoria._id}}}" value="{{categoria._id}}">
+                            <label class="form-check-label" for="categoria-{{categoria._id}}}">{{categoria.nombre}}</label>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Tipos de comida ofertados</label>
+                    </div>
+                    {% for tipo in tipos %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="tipos[]" type="checkbox" id="tipo-{{tipo._id}}}" value="{{tipo._id}}">
+                            <label class="form-check-label" for="tipo-{{tipo._id}}}">{{tipo.nombre}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-group mb-2">
+                    <label for="nombreRestaurante" >Nombre de calle</label>
+                    <input type="text" class="form-control" id="calle" value="{{ restaurante.calle ? restaurante.calle:"" }}" name="calle" placeholder="" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="numero" >Número</label>
+                    <input type="text" class="form-control" id="numero" value="{{ restaurante.numero ? restaurante.numero:"" }}" name="numero" placeholder="calle" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="cp" >Codigo postal</label>
+                    <input type="text" class="form-control" id="cp" value="{{ restaurante.cp ? restaurante.cp:"" }}" name="cp" placeholder="" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="colonia" >Colonia</label>
+                    <input type="text" class="form-control" id="colonia" value="{{ restaurante.colonia ? restaurante.colonia:"" }}" name="colonia" placeholder="" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="Ciudad" >Ciudad</label>
+                    <input type="text" class="form-control" id="Ciudad" value="{{ restaurante.ciudad ? restaurante.ciudad:"" }}" name="ciudad" placeholder="" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="Estado" >Estado</label>
+                    <input type="text" class="form-control" id="Estado" value="{{ restaurante.estado ? restaurante.estado:"" }}" name="estado" placeholder="" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="Pais" >Pais</label>
+                    <input type="text" class="form-control" id="Pais" value="{{ restaurante.pais ? restaurante.pais:"" }}" name="pais" placeholder="" required>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="caracteristicasInmueble" role="tabpanel" aria-labelledby="caracteristicasInmueble-tab">...</div>
+            <div class="tab-pane fade" id="servicios" role="tabpanel" aria-labelledby="servicios-tab">...</div>
+            <div class="tab-pane fade" id="condiciones" role="tabpanel" aria-labelledby="condiciones-tab">...</div>
+            <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">...</div>
+            <div class="tab-pane fade" id="caracteristicasVentas" role="tabpanel" aria-labelledby="caracteristicasVentas-tab">
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Seleccione las opciones de venta para su restaurante</label>
+                    </div>
+                    {% for categoria in categorias_venta %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="caracteristicasVentas[]" type="checkbox" id="categoria-{{categoria._id}}}" value="{{categoria._id}}">
+                            <label class="form-check-label" for="categoria-{{categoria._id}}}">{{categoria.nombre}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
+
+
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
 </div>

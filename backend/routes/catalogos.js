@@ -3,6 +3,7 @@ var router = express.Router();
 
 var categoriaRestaurante = require('../controllers/catalogos/categoriaRestauranteController');
 var tipoComida = require('../controllers/catalogos/tiposComidaController');
+var caracteristicaVenta = require('../controllers/catalogos/caracteristicasVentaController');
 
 router.get('/categorias_restaurante/', categoriaRestaurante.lista);
 router.post('/categorias_restaurante/create', categoriaRestaurante.categoria_create_post);
@@ -17,4 +18,11 @@ router.get('/tipos_comida/data', tipoComida.tipo_data_get);
 router.get('/tipos_comida/form', tipoComida.tipo_form_get);
 router.get('/tipos_comida/form/:id', tipoComida.tipo_edit_get);
 router.get('/tipos_comida/delete/:id', tipoComida.tipo_delete_get);
+
+router.get('/caracteristicas_venta/', caracteristicaVenta.lista);
+router.post('/caracteristicas_venta/create', caracteristicaVenta.create_post);
+router.get('/caracteristicas_venta/data', caracteristicaVenta.data_get);
+router.get('/caracteristicas_venta/form', caracteristicaVenta.form_get);
+router.get('/caracteristicas_venta/form/:id', caracteristicaVenta.edit_get);
+router.get('/caracteristicas_venta/delete/:id', caracteristicaVenta.delete_get);
 module.exports = router;

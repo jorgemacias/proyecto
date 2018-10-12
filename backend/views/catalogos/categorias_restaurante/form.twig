@@ -3,7 +3,7 @@
         <input type="hidden" value="{{ categoria._id ? categoria._id:"" }}" name="id">
         <div class="form-group mb-2">
             <label for="nombreCategoria" >Nombre de la categoria</label>
-            <input type="text" class="form-control-plaintext" id="nombreCategoria" value="{{ categoria.nombre ? categoria.nombre:"" }}" name="nombre" placeholder="Nombre de la categoria" required>
+            <input type="text" class="form-control" id="nombreCategoria" value="{{ categoria.nombre ? categoria.nombre:"" }}" name="nombre" placeholder="Nombre de la categoria" required>
         </div>
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
