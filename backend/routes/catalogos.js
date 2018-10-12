@@ -7,6 +7,7 @@ var caracteristicaVenta = require('../controllers/catalogos/caracteristicasVenta
 var caracteristicaInmueble = require('../controllers/catalogos/caracteristicasInmuebleController');
 var caracteristicaServicios = require('../controllers/catalogos/caracteristicasServiciosController');
 var condiciones = require('../controllers/catalogos/condicionesController');
+var formas_pagos = require('../controllers/catalogos/formasPagoController');
 
 router.get('/categorias_restaurante/', categoriaRestaurante.lista);
 router.post('/categorias_restaurante/create', categoriaRestaurante.categoria_create_post);
@@ -49,4 +50,11 @@ router.get('/condiciones/data', condiciones.data_get);
 router.get('/condiciones/form', condiciones.form_get);
 router.get('/condiciones/form/:id', condiciones.edit_get);
 router.get('/condiciones/delete/:id', condiciones.delete_get);
+
+router.get('/formas_pagos/', formas_pagos.lista);
+router.post('/formas_pagos/create', formas_pagos.create_post);
+router.get('/formas_pagos/data', formas_pagos.data_get);
+router.get('/formas_pagos/form', formas_pagos.form_get);
+router.get('/formas_pagos/form/:id', formas_pagos.edit_get);
+router.get('/formas_pagos/delete/:id', formas_pagos.delete_get);
 module.exports = router;

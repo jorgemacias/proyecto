@@ -1,0 +1,25 @@
+<div class="container">
+    <form action="/catalogos/formas_pagos/create" method="post" id="form">
+        <input type="hidden" value="{{ forma_pago._id ? forma_pago._id:"" }}" name="id">
+        <div class="form-group mb-2">
+            <label for="nombre" >Nombre de la forma de pago</label>
+            <input type="text" class="form-control" id="nombre" value="{{ forma_pago.nombre ? forma_pago.nombre:"" }}" name="nombre" placeholder="" required>
+        </div>
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#form').submit(function (e) {
+        e.preventDefault();
+
+        $.post($(this).attr('action'), $(this).serialize(), function (data) {
+            document.getElementById("form").reset();
+            myGrid.clearAll();
+            myGrid.load("/catalogos/formas_pagos/data", "json");
+            CloseModal()
+        }).fail(function (err) {
+            console.error("ocurrio un error" + err.msg)
+        });
+    });
+</script>

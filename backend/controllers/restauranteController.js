@@ -6,6 +6,7 @@ var categoriasVenta = require('../models/catalogos/caracteristicas_venta');
 var caracteristicasInmueble = require('../models/catalogos/caracteristicas_inmueble');
 var caracteristicasServicios = require('../models/catalogos/caracteristicas_servicios');
 var condiciones = require('../models/catalogos/condiciones');
+var formasPago = require('../models/catalogos/formas_pagos');
 
 exports.lista = function (req, res, next) {
     res.render('restaurantes/lista', {title: 'Lista de restaurantes'});
@@ -17,8 +18,9 @@ exports.restaurante_form_get = function (req, res, next) {
     categorias_venta = [];
     caracteristicas_inmueble = [];
     caracteristicas_servicios = [];
-    condiciones_list=[];
-    
+    condiciones_list = [];
+    formas_pago = [];
+
     tiposComida.find({}, function (err, tipos) {
         tipos.forEach(function (tipo) {
             tipos_comida.push(tipo);
@@ -43,18 +45,25 @@ exports.restaurante_form_get = function (req, res, next) {
                             condicions.forEach(function (condicion) {
                                 condiciones_list.push(condicion);
                             });
-                            res.render('restaurantes/form', {
-                                session: req.session,
-                                layout: null,
-                                tipos: tipos_comida,
-                                categorias: categorias_restaurante,
-                                categorias_venta: categorias_venta,
-                                caracteristicas_inmueble: caracteristicas_inmueble,
-                                caracteristicas_servicios: caracteristicas_servicios,
-                                condiciones_list:condiciones_list
-                            }, function (err, output) {
-                                res.send(output);
+                            formasPago.find({}, function (err, formasPagos) {
+                                formasPagos.forEach(function (formaPago) {
+                                    formas_pago.push(formaPago);
+                                });
+                                res.render('restaurantes/form', {
+                                    session: req.session,
+                                    layout: null,
+                                    tipos: tipos_comida,
+                                    categorias: categorias_restaurante,
+                                    categorias_venta: categorias_venta,
+                                    caracteristicas_inmueble: caracteristicas_inmueble,
+                                    caracteristicas_servicios: caracteristicas_servicios,
+                                    condiciones_list: condiciones_list,
+                                    formas_pago:formas_pago
+                                }, function (err, output) {
+                                    res.send(output);
+                                });
                             });
+                            
                         });
 
                     });

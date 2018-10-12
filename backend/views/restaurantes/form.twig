@@ -118,7 +118,19 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">...</div>
+            <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">
+                <div class="form-group mb-2">
+                    <div>
+                        <label class="label" >Formas de pago</label>
+                    </div>
+                    {% for forma_pago in formas_pago %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" name="caracteristicasPago[]" type="checkbox" id="forma_pago-{{forma_pago._id}}}" value="{{forma_pago._id}}">
+                            <label class="form-check-label" for="forma_pago-{{forma_pago._id}}}">{{forma_pago.nombre}}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="tab-pane fade" id="caracteristicasVentas" role="tabpanel" aria-labelledby="caracteristicasVentas-tab">
                 <div class="form-group mb-2">
                     <div>
