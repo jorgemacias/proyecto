@@ -1,9 +1,32 @@
+
 <div class="container">
     <form action="/restaurantes/create" method="post" id="form-restaurante">
         <input type="hidden" value="{{ restaurante._id ? restaurante._id:"" }}" name="id">
         <div class="form-group mb-2">
             <label for="nombreRestaurante" >Nombre del restaurante</label>
             <input type="text" class="form-control-plaintext" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="nombre" placeholder="Nombre del restaurante" required>
+        </div>
+        <div class="form-group mb-2">
+            <div>
+                <label class="label" >Categorías de restaurante</label>
+            </div>
+            {% for categoria in categorias %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="categorias[]" type="checkbox" id="categoria-{{categoria._id}}}" value="{{categoria._id}}">
+                    <label class="form-check-label" for="categoria-{{categoria._id}}}">{{categoria.nombre}}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="form-group mb-2">
+            <div>
+                <label class="label" >Tipos de comida ofertados</label>
+            </div>
+            {% for tipo in tipos %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="tipos[]" type="checkbox" id="tipo-{{tipo._id}}}" value="{{tipo._id}}">
+                    <label class="form-check-label" for="tipo-{{tipo._id}}}">{{tipo.nombre}}</label>
+                </div>
+            {% endfor %}
         </div>
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>

@@ -1,26 +1,49 @@
 // Requerimos modelo user
 var Restaurante = require('../models/restaurante');
-var md5 = require('md5');
-
+var tiposComida = require('../models/catalogos/tipos_comida');
+var categoriasRestaurante = require('../models/catalogos/categorias_restaurante');
 
 exports.lista = function (req, res, next) {
     res.render('restaurantes/lista', {title: 'Lista de restaurantes'});
 };
 
 exports.restaurante_form_get = function (req, res, next) {
-    res.render('restaurantes/form', {session: req.session, layout: null}, function (err, output) {
-        res.send(output);
+    tipos_comida = [];
+    categorias_restaurante = [];
+    tiposComida.find({}, function (err, tipos) {
+        tipos.forEach(function (tipo) {
+            tipos_comida.push(tipo);
+        });
+        categoriasRestaurante.find({}, function (err, categorias) {
+            categorias.forEach(function (categoria) {
+                categorias_restaurante.push(categoria);
+            });
+            res.render('restaurantes/form', {session: req.session, layout: null, tipos: tipos_comida, categorias: categorias_restaurante}, function (err, output) {
+                res.send(output);
+            });
+        });
     });
+
 
 };
 
 exports.restaurante_form_edit_get = function (req, res, next) {
-
-    Restaurante.findOne({_id: req.params.id}, function (err, restaurante) {
-        res.render('restaurantes/form', {restaurante: restaurante}, function (err, output) {
-            res.send(output);
+    tiposComida.find({}, function (err, tipos) {
+        tipos.forEach(function (tipo) {
+            tipos_comida.push(tipo);
+        });
+        categoriasRestaurante.find({}, function (err, categorias) {
+            categorias.forEach(function (categoria) {
+                categorias_restaurante.push(categoria);
+            });
+            Restaurante.findOne({_id: req.params.id}, function (err, restaurante) {
+                res.render('restaurantes/form', {restaurante: restaurante, tipos: tipos_comida, categorias: categorias_restaurante}, function (err, output) {
+                    res.send(output);
+                });
+            });
         });
     });
+
 
 };
 exports.restaurante_delete_get = function (req, res, next) {
@@ -44,7 +67,9 @@ exports.restaurante_data_get = function (req, res, next) {
                 id: restaurante._id, data: [
                     '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del(\'' + restaurante._id + '\')"></i>',
                     '<i class="fa fa-pencil" style="font-size:15px" onclick="edit(\'' + restaurante._id + '\')"></i>',
-                    restaurante.nombre, restaurante.categorias.join(',')]
+                    restaurante.nombre,
+                    restaurante.categoriasRestaurante.join(','),
+                    restaurante.tiposComida.join(',')]
             });
         });
 
@@ -79,10 +104,8 @@ exports.restaurante_create_post = function (req, res) {
         caracteristicasAreas: req.body.caracteristicasAreas,
         caracteristicasAceptacion: req.body.caracteristicasAceptacion,
         caracteristicasInmueble: req.body.caracteristicasInmueble,
-        galeria: req.body.galeria,
         logotipo: req.body.logotipo,
-        diasOperacion: req.body.diasOperacion,
-        mesas: req.body.mesas
+        diasOperacion: req.body.diasOperacion
     };
 
     var restaurante = new Restaurante(data);
