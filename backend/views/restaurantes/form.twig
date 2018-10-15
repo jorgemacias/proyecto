@@ -1,5 +1,5 @@
 <div class="container">
-    <form action="/restaurantes/create" method="post" id="form-restaurante" enctype="multipart/form-data">
+    <form action="/restaurantes/create" method="post" id="form-restaurante" name="form-restaurante" enctype="multipart/form-data">
         <input type="hidden" value="{{ restaurante._id ? restaurante._id:" " }}" name="id">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -27,7 +27,12 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="Logotipo">Logotipo</label>
-                    <input type="file" class="form-control" id="Logotipo" value="{{ restaurante.nombre ? restaurante.nombre:" " }}" name="logo">
+                    {% if restaurante.logotipo %}
+                        {% if restaurante.logotipo != "" %}
+                            <img width="300" height="100" src="/images/logos/{{ restaurante.logotipo }}">
+                        {% endif %}
+                    {% endif %}
+                    <input type="file" class="form-control" id="Logotipo" name="logo">
                 </div>
                 <div class="form-group mb-2">
                     <div>
@@ -148,13 +153,23 @@
         $('#form-restaurante').submit(function (e) {
             e.preventDefault();
 
-            $.post($(this).attr('action'), $(this).serialize(), function (data) {
-                document.getElementById("form-restaurante").reset();
-                myGrid.clearAll();
-                myGrid.load("/restaurantes/data", "json");
-                CloseModal()
-            }).fail(function (err) {
-                console.error("ocurrio un error" + err.msg)
-            });
+            form = document.forms.namedItem("form-restaurante");
+            oData = new FormData(form);
+
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", $(this).attr('action'), true);
+            oReq.onload = function (oEvent) {
+                if (oReq.status == 200) {
+                    document.getElementById("form-restaurante").reset();
+                    myGrid.clearAll();
+                    myGrid.load("/restaurantes/data", "json");
+                    CloseModal();
+                    OK("Guardado");
+                } else {
+                    console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
+                }
+            };
+
+            oReq.send(oData);
         });
     </script>

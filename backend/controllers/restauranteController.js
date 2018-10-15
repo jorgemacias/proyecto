@@ -1,5 +1,6 @@
 // Requerimos modelo user
 var async = require("async");
+var helper = require('../helpers/helpers')
 
 var Restaurante = require('../models/restaurante');
 var tiposComida = require('../models/catalogos/tipos_comida');
@@ -144,21 +145,20 @@ exports.restaurante_data_get = function (req, res, next) {
 
 exports.restaurante_create_post = function (req, res) {
     var nombre_logo = "";
-    console.log(req.body);
-    //    if (req.files) {
-    //        let logo = req.files.logo;
-    //        nombre_logo = "";
-    //        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    //
-    //        for (var i = 0; i < 5; i++)
-    //            nombre_logo += possible.charAt(Math.floor(Math.random() * possible.length));
-    //        logo.mv('C:\Users\IMUG\curso\equipo2\proyecto\backend\archivos\/logos\/' + nombre_logo + '.jpg', function (err) {
-    //            if (err)
-    //                return res.status(500).send(err);
-    //        });
-    //    }
+    if (req.files) {
+        let logo = req.files.logo;
+        if (logo) {
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+            for (var i = 0; i < 5; i++)
+                nombre_logo += possible.charAt(Math.floor(Math.random() * possible.length));
+            logo.mv('C:\\Users\\IMUG\\curso\\equipo2\\proyecto\\backend\\public\\images\\logos\\' + nombre_logo + '.jpg', function (err) {
+                if (err)
+                    return res.status(500).send(err);
+            });
+        }
 
+    }
 
     var domicilio = {
         calle: req.body.calle,
@@ -183,8 +183,12 @@ exports.restaurante_create_post = function (req, res) {
         caracteristicasAreas: req.body.caracteristicasAreas,
         caracteristicasAceptacion: req.body.caracteristicasAceptacion,
         caracteristicasInmueble: req.body.caracteristicasInmueble,
-        logotipo: nombre_logo + '.jpg'
     };
+
+    if (nombre_logo != "") {;
+        console.log(nombre_logo)
+        data = helper.addValueInObject(data, "logotipo", nombre_logo + '.jpg')
+    }
 
     var restaurante = new Restaurante(data);
 
