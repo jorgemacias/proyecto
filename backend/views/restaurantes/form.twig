@@ -1,175 +1,160 @@
-
 <div class="container">
-    <form action="/restaurantes/create" method="post" id="form-restaurante" encType="multipart/form-data">
-        <input type="hidden" value="{{ restaurante._id ? restaurante._id:"" }}" name="id">
+    <form action="/restaurantes/create" method="post" id="form-restaurante" enctype="multipart/form-data">
+        <input type="hidden" value="{{ restaurante._id ? restaurante._id:" " }}" name="id">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="generales-tab" data-toggle="tab" href="#generales" role="tab" aria-controls="generales" aria-selected="true">Generales</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="caracteristicasInmueble-tab" data-toggle="tab" href="#caracteristicasInmueble" role="tab" aria-controls="caracteristicasInmueble" aria-selected="false">Inmueble</a>
+                <a class="nav-link" id="caracteristicas-tab" data-toggle="tab" href="#caracteristicas" role="tab" aria-controls="caracteristicas" aria-selected="false">Características</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="caracteristicasVentas-tab" data-toggle="tab" href="#caracteristicasVentas" role="tab" aria-controls="caracteristicasVentas" aria-selected="false">Opciones de venta</a>
+                <a class="nav-link" id="mesas-tab" data-toggle="tab" href="#mesas" role="tab" aria-controls="mesas" aria-selected="false">Mesas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="servicios-tab" data-toggle="tab" href="#servicios" role="tab" aria-controls="servicios" aria-selected="false">Servicios / areas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="condiciones-tab" data-toggle="tab" href="#condiciones" role="tab" aria-controls="condiciones" aria-selected="false">Condiciones</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="formas_pago-tab" data-toggle="tab" href="#formas_pago" role="tab" aria-controls="formas_pago" aria-selected="false">Formas de pago</a>
+                <a class="nav-link" id="fotos-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="generales" role="tabpanel" aria-labelledby="generales-tab">
                 <div class="form-group mb-2">
-                    <label for="nombreRestaurante" >Nombre del restaurante</label>
-                    <input type="text" class="form-control" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="nombre" placeholder="Nombre del restaurante" required>
+                    <label for="nombreRestaurante">Nombre del restaurante</label>
+                    <input type="text" class="form-control" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:" " }}" name="nombre" placeholder="Nombre del restaurante" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="descripcion" >Descripción</label>
-                    <textarea class="form-control" id="descripcion" value="{{ restaurante.descripcion ? restaurante.descripcion:"" }}" name="descripcion" placeholder="" required rows="3"></textarea>
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" placeholder="" required="required" rows="3">{{ restaurante.descripcion ? restaurante.descripcion:" " }}</textarea>
                 </div>
                 <div class="form-group mb-2">
-                    <label for="Logotipo" >Logotipo</label>
-                    <input type="file" class="form-control" id="Logotipo" value="{{ restaurante.nombre ? restaurante.nombre:"" }}" name="logo" >
+                    <label for="Logotipo">Logotipo</label>
+                    <input type="file" class="form-control" id="Logotipo" value="{{ restaurante.nombre ? restaurante.nombre:" " }}" name="logo">
                 </div>
                 <div class="form-group mb-2">
                     <div>
-                        <label class="label" >Categorías de restaurante</label>
+                        <label class="label">Categorías de restaurante</label>
                     </div>
                     {% for categoria in categorias %}
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="categorias" type="checkbox" id="categoria-{{categoria._id}}" value="{{categoria._id}}">
+                            <input class="form-check-input" name="categorias" type="checkbox" {% if categoria._id in restaurante.categorias %} {{'checked'}} {% endif %} id="categoria-{{categoria._id}}" value="{{categoria._id}}">
                             <label class="form-check-label" for="categoria-{{categoria._id}}">{{categoria.nombre}}</label>
                         </div>
                     {% endfor %}
                 </div>
                 <div class="form-group mb-2">
                     <div>
-                        <label class="label" >Tipos de comida ofertados</label>
+                        <label class="label">Tipos de comida ofertados</label>
                     </div>
                     {% for tipo in tipos %}
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="tipos" type="checkbox" id="tipo-{{tipo._id}}" value="{{tipo._id}}">
+                            <input class="form-check-input" name="tipos" type="checkbox" {% if tipo._id in restaurante.tiposComida %} {{'checked'}} {% endif %} id="tipo-{{tipo._id}}" value="{{tipo._id}}">
                             <label class="form-check-label" for="tipo-{{tipo._id}}">{{tipo.nombre}}</label>
                         </div>
                     {% endfor %}
                 </div>
                 <div class="form-group mb-2">
-                    <label for="nombreRestaurante" >Nombre de calle</label>
-                    <input type="text" class="form-control" id="calle" value="{{ restaurante.calle ? restaurante.calle:"" }}" name="calle" placeholder="" required>
+                    <label for="nombreRestaurante">Nombre de calle</label>
+                    <input type="text" class="form-control" id="calle" value="{{ restaurante.domicilio.calle ? restaurante.domicilio.calle:" " }}" name="calle" placeholder="" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="numero" >Número</label>
-                    <input type="text" class="form-control" id="numero" value="{{ restaurante.numero ? restaurante.numero:"" }}" name="numero" placeholder="calle" required>
+                    <label for="numero">Número</label>
+                    <input type="text" class="form-control" id="numero" value="{{ restaurante.domicilio.numero ? restaurante.domicilio.numero:" " }}" name="numero" placeholder="calle" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="cp" >Codigo postal</label>
-                    <input type="text" class="form-control" id="cp" value="{{ restaurante.cp ? restaurante.cp:"" }}" name="cp" placeholder="" required>
+                    <label for="cp">Codigo postal</label>
+                    <input type="text" class="form-control" id="cp" value="{{ restaurante.domicilio.cp ? restaurante.domicilio.cp:" " }}" name="cp" placeholder="" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="colonia" >Colonia</label>
-                    <input type="text" class="form-control" id="colonia" value="{{ restaurante.colonia ? restaurante.colonia:"" }}" name="colonia" placeholder="" required>
+                    <label for="colonia">Colonia</label>
+                    <input type="text" class="form-control" id="colonia" value="{{ restaurante.domicilio.colonia ? restaurante.domicilio.colonia:" " }}" name="colonia" placeholder="" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="Ciudad" >Ciudad</label>
-                    <input type="text" class="form-control" id="Ciudad" value="{{ restaurante.ciudad ? restaurante.ciudad:"" }}" name="ciudad" placeholder="" required>
+                    <label for="Ciudad">Ciudad</label>
+                    <input type="text" class="form-control" id="Ciudad" value="{{ restaurante.domicilio.ciudad ? restaurante.domicilio.ciudad:" " }}" name="ciudad" placeholder="" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="Estado" >Estado</label>
-                    <input type="text" class="form-control" id="Estado" value="{{ restaurante.estado ? restaurante.estado:"" }}" name="estado" placeholder="" required>
+                    <label for="Estado">Estado</label>
+                    <input type="text" class="form-control" id="Estado" value="{{ restaurante.domicilio.estado ? restaurante.domicilio.estado:" " }}" name="estado" placeholder="" required="required">
                 </div>
                 <div class="form-group mb-2">
-                    <label for="Pais" >Pais</label>
-                    <input type="text" class="form-control" id="Pais" value="{{ restaurante.pais ? restaurante.pais:"" }}" name="pais" placeholder="" required>
+                    <label for="Pais">Pais</label>
+                    <input type="text" class="form-control" id="Pais" value="{{ restaurante.domicilio.pais ? restaurante.domicilio.pais:" " }}" name="pais" placeholder="" required="required">
                 </div>
             </div>
-            <div class="tab-pane fade" id="caracteristicasInmueble" role="tabpanel" aria-labelledby="caracteristicasInmueble-tab">
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label" >Seleccione las características de su restaurante</label>
-                    </div>
-                    {% for caracteristica_inmueble in caracteristicas_inmueble %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="caracteristicasInmueble" type="checkbox" id="caracteristica_inmueble-{{caracteristica_inmueble._id}}" value="{{caracteristica_inmueble._id}}">
-                            <label class="form-check-label" for="caracteristica_inmueble-{{caracteristica_inmueble._id}}">{{caracteristica_inmueble.nombre}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="tab-pane fade" id="servicios" role="tabpanel" aria-labelledby="servicios-tab">
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label" >Seleccione los servicios del restaurante</label>
-                    </div>
-                    {% for caracteristicas_servicio in caracteristicas_servicios %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="caracteristicasAreas" type="checkbox" id="caracteristicas_servicio-{{caracteristicas_servicio._id}}" value="{{caracteristicas_servicio._id}}">
-                            <label class="form-check-label" for="caracteristicas_servicio-{{caracteristicas_servicio._id}}">{{caracteristicas_servicio.nombre}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="tab-pane fade" id="condiciones" role="tabpanel" aria-labelledby="condiciones-tab">
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label" >Condiciones de servicio</label>
-                    </div>
-                    {% for condiciones in condiciones_list %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="caracteristicasAceptacion" type="checkbox" id="condiciones-{{condiciones._id}}" value="{{condiciones._id}}">
-                            <label class="form-check-label" for="condiciones-{{condiciones._id}}">{{condiciones.nombre}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="tab-pane fade" id="formas_pago" role="tabpanel" aria-labelledby="formas_pago-tab">
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label" >Formas de pago</label>
-                    </div>
-                    {% for forma_pago in formas_pago %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="caracteristicasPago" type="checkbox" id="forma_pago-{{forma_pago._id}}" value="{{forma_pago._id}}">
-                            <label class="form-check-label" for="forma_pago-{{forma_pago._id}}">{{forma_pago.nombre}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="tab-pane fade" id="caracteristicasVentas" role="tabpanel" aria-labelledby="caracteristicasVentas-tab">
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label" >Seleccione las opciones de venta para su restaurante</label>
-                    </div>
-                    {% for categoria in categorias_venta %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="caracteristicasVentas" type="checkbox" id="categoria-{{categoria._id}}" value="{{categoria._id}}">
-                            <label class="form-check-label" for="categoria-{{categoria._id}}">{{categoria.nombre}}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+            <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
+                <div class="card">
+                    <h5 class="card-header">Seleccione las características de su restaurante</h5>
+                    <div class="card-body">
 
+                        {% for caracteristica_inmueble in caracteristicas_inmueble %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="caracteristicasInmueble" {% if caracteristica_inmueble._id in restaurante.caracteristicasInmueble %} {{'checked'}} {% endif %} type="checkbox" id="caracteristica_inmueble-{{caracteristica_inmueble._id}}" value="{{caracteristica_inmueble._id}}">
+                                <label class="form-check-label" for="caracteristica_inmueble-{{caracteristica_inmueble._id}}">{{caracteristica_inmueble.nombre}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="card-header">Seleccione los servicios del restaurante</h5>
+                    <div class="card-body">
+                        {% for caracteristicas_servicio in caracteristicas_servicios %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="caracteristicasAreas" type="checkbox" {% if caracteristicas_servicio._id in restaurante.caracteristicasAreas %} {{'checked'}} {% endif %} id="caracteristicas_servicio-{{caracteristicas_servicio._id}}" value="{{caracteristicas_servicio._id}}">
+                                <label class="form-check-label" for="caracteristicas_servicio-{{caracteristicas_servicio._id}}">{{caracteristicas_servicio.nombre}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="card-header">Condiciones de servicio</h5>
+                    <div class="card-body">
+                        {% for condiciones in condiciones_list %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="caracteristicasAceptacion" {% if condiciones._id in restaurante.caracteristicasAceptacion %} {{'checked'}} {% endif %} type="checkbox" id="condiciones-{{condiciones._id}}" value="{{condiciones._id}}">
+                                <label class="form-check-label" for="condiciones-{{condiciones._id}}">{{condiciones.nombre}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="card-header">Formas de pago</h5>
+                    <div class="card-body">
+                        {% for forma_pago in formas_pago %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="caracteristicasPago" {% if forma_pago._id in restaurante.caracteristicasPago %} {{'checked'}} {% endif %} type="checkbox" id="forma_pago-{{forma_pago._id}}" value="{{forma_pago._id}}">
+                                <label class="form-check-label" for="forma_pago-{{forma_pago._id}}">{{forma_pago.nombre}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card">
+                    <h5 class="card-header">Seleccione las opciones de venta para su restaurante</h5>
+                    <div class="card-body">
+                        {% for categoria in categorias_venta %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" name="caracteristicasVentas" {% if categoria._id in restaurante.caracteristicasVentas %} {{'checked'}} {% endif %} type="checkbox" id="categoria-{{categoria._id}}" value="{{categoria._id}}">
+                                <label class="form-check-label" for="categoria-{{categoria._id}}">{{categoria.nombre}}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
 
-        <button type="submit" class="btn btn-success mb-2">Guardar</button>
-    </form>
-</div>
+            </div>
 
-<script>
-    $('#form-mesa').submit(function (e) {
-        e.preventDefault();
+            <button type="submit" class="btn btn-success mb-2">Guardar</button>
+        </form>
+    </div>
 
-        $.post($(this).attr('action'), $(this).serialize(), function (data) {
-            document.getElementById("form-restaurante").reset();
-            myGrid.clearAll();
-            myGrid.load("/restaurantes/data", "json");
-            CloseModal()
-        }).fail(function (err) {
-            console.error("ocurrio un error" + err.msg)
+    <script>
+        $('#form-restaurante').submit(function (e) {
+            e.preventDefault();
+
+            $.post($(this).attr('action'), $(this).serialize(), function (data) {
+                document.getElementById("form-restaurante").reset();
+                myGrid.clearAll();
+                myGrid.load("/restaurantes/data", "json");
+                CloseModal()
+            }).fail(function (err) {
+                console.error("ocurrio un error" + err.msg)
+            });
         });
-    });
-</script>
+    </script>
