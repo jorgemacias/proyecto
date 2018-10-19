@@ -2,8 +2,10 @@ var condiciones = require('../../models/catalogos/condiciones');
 
 exports.lista = function (req, res, next) {
 
-    res.render('catalogos/condiciones/lista', { title: 'Condiciones' });
-
+    if (req.session.logueado)
+        res.render('catalogos/condiciones/lista', { title: 'Condiciones', session: req.session });
+    else
+        res.redirect('/');
 };
 
 exports.form_get = function (req, res, next) {

@@ -2,7 +2,7 @@ var caracteristicaInmueble = require('../../models/catalogos/caracteristicas_inm
 
 exports.lista = function (req, res, next) {
 
-    res.render('catalogos/caracteristicas_inmueble/lista', { title: 'Opciones de inmueble' });
+    res.render('catalogos/caracteristicas_inmueble/lista', { title: 'Opciones de inmueble',session:req.session });
 
 };
 

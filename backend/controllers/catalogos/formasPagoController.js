@@ -1,8 +1,11 @@
 var formas_pagos = require('../../models/catalogos/formas_pagos');
 
 exports.lista = function (req, res, next) {
+    if (req.session.logueado)
+        res.render('catalogos/formas_pagos/lista', { title: 'Formas de pago', session: req.session });
+    else
+        res.redirect('/');
 
-    res.render('catalogos/formas_pagos/lista', { title: 'Formas de pago' });
 
 };
 

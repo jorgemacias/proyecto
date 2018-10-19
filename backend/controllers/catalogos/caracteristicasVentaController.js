@@ -1,8 +1,11 @@
 var caracteristicaVenta = require('../../models/catalogos/caracteristicas_venta');
 
 exports.lista = function (req, res, next) {
+    if (req.session.logueado)
+        res.render('catalogos/caracteristicas_venta/lista', { title: 'Opciones de venta', session: req.session });
+    else
+        res.redirect('/');
 
-    res.render('catalogos/caracteristicas_venta/lista', { title: 'Opciones de venta' });
 
 };
 

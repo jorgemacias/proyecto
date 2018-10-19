@@ -12,7 +12,7 @@ var condiciones = require('../models/catalogos/condiciones');
 var formasPago = require('../models/catalogos/formas_pagos');
 
 exports.lista = function (req, res, next) {
-    res.render('restaurantes/lista', { title: 'Lista de restaurantes' });
+    res.render('restaurantes/lista', { title: 'Lista de restaurantes', session: req.session });
 };
 
 exports.restaurante_form_get = function (req, res, next) {

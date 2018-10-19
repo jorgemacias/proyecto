@@ -4,16 +4,16 @@ var md5 = require('md5');
 
 
 exports.lista = function (req, res, next) {
-//    if (req.session.logueado) {
-    res.render('usuarios/lista', {title: 'Lista de usaurios'});
-//    } else {
-//        res.redirect('/');
-//    }
+    if (req.session.logueado)
+        res.render('usuarios/lista', { title: 'Lista de usuarios', session: req.session });
+    else
+        res.redirect('/');
+
 
 };
 
 exports.user_form_get = function (req, res, next) {
-    res.render('usuarios/form', {session: req.session, layout: null}, function (err, output) {
+    res.render('usuarios/form', { session: req.session, layout: null }, function (err, output) {
         res.send(output);
     });
 
@@ -21,8 +21,8 @@ exports.user_form_get = function (req, res, next) {
 
 exports.user_form_edit_get = function (req, res, next) {
 
-    User.findOne({_id: req.params.id}, function (err, user) {
-        res.render('usuarios/form', {user: user}, function (err, output) {
+    User.findOne({ _id: req.params.id }, function (err, user) {
+        res.render('usuarios/form', { user: user }, function (err, output) {
             res.send(output);
         });
     });
@@ -30,11 +30,11 @@ exports.user_form_edit_get = function (req, res, next) {
 };
 exports.user_delete_get = function (req, res, next) {
 
-    User.remove({_id: req.params.id}, function (err) {
+    User.remove({ _id: req.params.id }, function (err) {
         if (!err) {
-            res.json({msg: 'Borrado'});
+            res.json({ msg: 'Borrado' });
         } else {
-            res.json({msg: 'Ocurrio un error al borrar'});
+            res.json({ msg: 'Ocurrio un error al borrar' });
         }
     });
 
@@ -45,13 +45,15 @@ exports.user_data_get = function (req, res, next) {
         var userMap = [];
 
         users.forEach(function (user) {
-            userMap.push({id: user._id, data: [
+            userMap.push({
+                id: user._id, data: [
                     '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del(\'' + user._id + '\')"></i>',
                     '<i class="fa fa-pencil" style="font-size:15px" onclick="edit(\'' + user._id + '\')"></i>',
                     user.username,
                     user.name,
                     user.email,
-                    user.password]});
+                    user.password]
+            });
         });
 
         data = {
@@ -70,7 +72,7 @@ exports.user_create_post = function (req, res) {
     };
 
     if (req.body.password !== '') {
-        data.password=md5(req.body.password);
+        data.password = md5(req.body.password);
     }
 
     var user = new User(data);
@@ -84,21 +86,24 @@ exports.user_create_post = function (req, res) {
             user.save(function (err, updatedUser) {
                 if (err)
                     return handleError(err);
-                res.json({msg: updatedUser._id});
+                res.json({ msg: updatedUser._id });
             });
         });
     } else {
         user.save(function (err, room) {
             if (err) {
-                res.status(200).send({msg: err.stack});
+                res.status(200).send({ msg: err.stack });
             } else {
-                res.json({msg: room._id});
+                res.json({ msg: room._id });
             }
         });
     }
 
+};
 
-
+exports.logout = function (req, res, next) {
+    req.session.destroy();
+    res.redirect('/');
 
 };
 

@@ -1,8 +1,11 @@
 var categoriaRestaurante = require('../../models/catalogos/categorias_restaurante');
 
 exports.lista = function (req, res, next) {
+    if (req.session.logueado)
+        res.render('catalogos/categorias_restaurante/lista', { title: 'Categorias de restaurantes', session: req.session });
+    else
+        res.redirect('/');
 
-    res.render('catalogos/categorias_restaurante/lista', { title: 'Categorias de restaurantes' });
 
 };
 

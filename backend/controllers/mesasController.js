@@ -2,7 +2,7 @@ var Mesa = require('../models/mesa');
 
 exports.lista = function (req, res, next) {
 
-    res.render('mesas/lista', { title: 'Lista de mesas' });
+    res.render('mesas/lista', { title: 'Lista de mesas',session:req.session });
 
 
 };

@@ -1,8 +1,11 @@
 var tipoComida = require('../../models/catalogos/tipos_comida');
 
 exports.lista = function (req, res, next) {
+    if (req.session.logueado)
+        res.render('catalogos/tipos_comida/lista', { title: 'Tipos de comida', session: req.session });
+    else
+        res.redirect('/');
 
-    res.render('catalogos/tipos_comida/lista', { title: 'Tipos de comida' });
 
 };
 

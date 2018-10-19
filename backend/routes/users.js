@@ -11,4 +11,5 @@ router.get('/form', users.user_form_get);
 router.get('/form/:id', users.user_form_edit_get);
 router.get('/delete/:id', users.user_delete_get);
 
+router.get('/logout', users.logout);
 module.exports = router;

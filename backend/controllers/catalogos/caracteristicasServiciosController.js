@@ -1,8 +1,11 @@
 var caracteristicaServicios = require('../../models/catalogos/caracteristicas_servicios');
 
 exports.lista = function (req, res, next) {
+    if (req.session.logueado)
+        res.render('catalogos/caracteristicas_servicios/lista', { title: 'Opciones de servicios', session: req.session });
+    else
+        res.redirect('/');
 
-    res.render('catalogos/caracteristicas_servicios/lista', { title: 'Opciones de servicios' });
 
 };
 
