@@ -13,14 +13,17 @@
         <script src="/dhtmlx/codebase/dhtmlx.js"></script>
         <script src="/js/custom.js"></script>
 
-        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
         <style>
-            script{
-                display:none !important;
+            script {
+                display: none !important;
             }
-            style{
-                display:none !important;
+            style {
+                display: none !important;
             }
             .modal-dialog {
                 max-width: 1200px !important;
@@ -28,7 +31,7 @@
         </style>
     </head>
     <body class="">
-        <div class="modal" tabindex="-1" role="dialog" id="myModal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal" tabindex="1" role="dialog" id="myModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" id="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -87,15 +90,16 @@
             <div class="content-wrapper">
                 <section class="content">
                     <div class="container-fluid">
-                    {% block body %}{% endblock %}
-                </div>
-            </section>
+                        {% block body %}{% endblock %}
+                    </div>
+                </section>
+            </div>
+            <footer class="main-footer">
+                <strong>Copyright &copy; 2018
+                    <a href="#">Equipo 2</a>.</strong>
+                All rights reserved.
+            </footer>
         </div>
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2018 <a href="#">Equipo 2</a>.</strong>
-            All rights reserved.
-        </footer>
-    </div>
 
-</body>
+    </body>
 </html>

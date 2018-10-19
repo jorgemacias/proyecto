@@ -1,6 +1,6 @@
 <div class="container">
     <form action="/restaurantes/create" method="post" id="form-restaurante" name="form-restaurante" enctype="multipart/form-data">
-        <input type="hidden" value="{{ restaurante._id ? restaurante._id:" " }}" name="id">
+        <input type="hidden" value="{{ restaurante._id ? restaurante._id:" " }}" name="id" id="id_rest">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="generales-tab" data-toggle="tab" href="#generales" role="tab" aria-controls="generales" aria-selected="true">Generales</a>
@@ -12,7 +12,25 @@
                 <a class="nav-link" id="mesas-tab" data-toggle="tab" href="#mesas" role="tab" aria-controls="mesas" aria-selected="false">Mesas</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="platillos-tab" data-toggle="tab" href="#platillos" role="tab" aria-controls="platillos" aria-selected="false">Platillos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="menus-tab" data-toggle="tab" href="#menus" role="tab" aria-controls="menus" aria-selected="false">Menús</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="fotos-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="reservaciones-tab" data-toggle="tab" href="#reservaciones" role="tab" aria-controls="reservaciones" aria-selected="false">RESERVACIONES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="entrega-tab" data-toggle="tab" href="#entrega" role="tab" aria-controls="entrega" aria-selected="false">Entrega a domicilio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="alertas-tab" data-toggle="tab" href="#alertas" role="tab" aria-controls="alertas" aria-selected="false">Alertas</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -23,7 +41,7 @@
                 </div>
                 <div class="form-group mb-2">
                     <label for="descripcion">Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" placeholder="" required="required" rows="3">{{ restaurante.descripcion ? restaurante.descripcion:" " }}</textarea>
+                    <textarea class="form-control" id="descripcion" name="descripcion" placeholder="" required="required" rows="3">{{ restaurante.descripcion ? restaurante.descripcion:"" }}</textarea>
                 </div>
                 <div class="form-group mb-2">
                     <label for="Logotipo">Logotipo</label>
@@ -142,34 +160,146 @@
                         {% endfor %}
                     </div>
                 </div>
+            </div>
+            <div class="tab-pane fade" id="mesas" role="tabpanel" aria-labelledby="mesas-tab">
+                <div class="card">
+                    <h5 class="card-header">Mesas del restaurante</h5>
+                    <div class="card-body">
+                        <div class="form-inline">
+                            <div class="form-group col-sm-2">
+                                <div>
+                                    <label for="nombreMesa" class="">Nombre de mesa</label>
+                                </div>
+                                <input type="text" style="width:100%" class="form-control" id="nombreMesa" value="" name="nombreMesa">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="noLugares" class="">Lugares</label>
+                                <input type="number" style="width:70px" class="form-control" id="noLugares" placeholder="No. de lugares">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="descripcion_mesa" class="">Descripción</label>
+                                <input type="text" class="form-control" id="descripcion_mesa" placeholder="Descripción de la mesa">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="foto_mesa" class="">Foto</label>
+                                <input type="file" style="width:100%" class="form-control" id="foto_mesa" name="foto_mesa">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="btnNuevaMesa">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-header">
+                        Mesas agregadas
+                    </div>
+                    <div class="card-body">
+                        <div id="gridbox_mesas" style="width:100%; height:400px; background-color:white;"></div>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+                {% if restaurante._id %}
+                    <script>
+                        var id = $("#id_rest").val();
+                        var myGridMesas;
+                        function edit_mesa(id) {}
+
+                        function del_mesa(id_mesa) {
+                            Question("¿Desea borrar la mesa?", function () {
+                                Loading();
+                                $.get("/restaurantes/delete_mesa/" + id+"/"+id_mesa, function (data) {
+                                    Ready();
+                                    OK("Mesa borrada");
+                                    myGridMesas.clearAll();
+                                    myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+                                });
+                            });
+                        }
+
+                        myGridMesas = new dhtmlXGridObject('gridbox_mesas');
+                        myGridMesas.setImagePath("dhtmlx/codebase/imgs/");
+                        myGridMesas.setHeader("Borrar,Nombre,Lugares,Descripción,Foto");
+                        myGridMesas.attachHeader("#cspan", "#text_filter", "#text_filter", "#text_filter", "#cspan");
+                        myGridMesas.setInitWidths("50,*,*,*,*");
+                        myGridMesas.enableAutoWidth(true);
+                        myGridMesas.setColAlign("center,left,left,left,center");
+                        myGridMesas.setColTypes("ro,ro,ro,ro,ro");
+                        myGridMesas.setColSorting("na,str,str,str,str");
+                        myGridMesas.init();
+                        myGridMesas.enableSmartRendering(true);
+                        myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+                        
+                    </script>
+                {% endif %}
 
             </div>
 
-            <button type="submit" class="btn btn-success mb-2">Guardar</button>
-        </form>
-    </div>
+        </div>
 
-    <script>
-        $('#form-restaurante').submit(function (e) {
+        <button type="submit" class="btn btn-success mb-2">Guardar</button>
+    </form>
+</div>
+
+<script>
+    $('#mesas-tab').on('click', function (e) {
+        if ($("#id_rest").val() == '') {
+            Warning("¡Guarde los datos generales del restaurante!");
             e.preventDefault();
+            return false;
+        }
+    });
+    $('#btnNuevaMesa').on('click', function (e) {
+        e.preventDefault();
 
-            form = document.forms.namedItem("form-restaurante");
-            oData = new FormData(form);
+        var nombreMesa = $("#nombreMesa").val();
+        var noLugares = $("#noLugares").val();
+        var descripcion_mesa = $("#descripcion_mesa").val();
 
-            var oReq = new XMLHttpRequest();
-            oReq.open("POST", $(this).attr('action'), true);
-            oReq.onload = function (oEvent) {
-                if (oReq.status == 200) {
-                    document.getElementById("form-restaurante").reset();
-                    myGrid.clearAll();
-                    myGrid.load("/restaurantes/data", "json");
-                    CloseModal();
-                    OK("Guardado");
-                } else {
-                    console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
-                }
-            };
+        formData = new FormData(document.getElementById("foto_mesa"));
+        var id = $("#id_rest").val();
+        formData.append('nombreMesa', nombreMesa);
+        formData.append('noLugares', noLugares);
+        formData.append('descripcion_mesa', descripcion_mesa);
+        formData.append('id', id);
+        formData.append('foto_mesa', $("input[name='foto_mesa']")[0].files[0]);
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "/restaurantes/agregar_mesa", true);
+        oReq.onload = function (oEvent) {
+            if (oReq.status == 200) {
+                $("#nombreMesa").val('');
+                $("#noLugares").val('');
+                $("#descripcion_mesa").val('');
+                $("#id_rest")
+                myGridMesas.clearAll();
+                myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+                OK("Mesa agregada");
+            } else {
+                console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
+            }
+        };
 
-            oReq.send(oData);
-        });
-    </script>
+        oReq.send(formData);
+    });
+
+    $('#form-restaurante').submit(function (e) {
+        e.preventDefault();
+
+        form = document.forms.namedItem("form-restaurante");
+        oData = new FormData(form);
+
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", $(this).attr('action'), true);
+        oReq.onload = function (oEvent) {
+            if (oReq.status == 200) {
+                document.getElementById("form-restaurante").reset();
+                myGrid.clearAll();
+                myGrid.load("/restaurantes/data", "json");
+                CloseModal();
+                OK("Guardado");
+            } else {
+                console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
+            }
+        };
+
+        oReq.send(oData);
+    });
+</script>
