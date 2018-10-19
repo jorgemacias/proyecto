@@ -18,19 +18,7 @@
                 <a class="nav-link" id="menus-tab" data-toggle="tab" href="#menus" role="tab" aria-controls="menus" aria-selected="false">Menús</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="horarios-tab" data-toggle="tab" href="#horarios" role="tab" aria-controls="horarios" aria-selected="false">Horarios</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="fotos-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="reservaciones-tab" data-toggle="tab" href="#reservaciones" role="tab" aria-controls="reservaciones" aria-selected="false">RESERVACIONES</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="entrega-tab" data-toggle="tab" href="#entrega" role="tab" aria-controls="entrega" aria-selected="false">Entrega a domicilio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="alertas-tab" data-toggle="tab" href="#alertas" role="tab" aria-controls="alertas" aria-selected="false">Alertas</a>
+                <a class="nav-link" id="fotos-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Galería multimedia</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -232,8 +220,77 @@
                 {% endif %}
 
             </div>
+            <div class="tab-pane fade" id="platillos" role="tabpanel" aria-labelledby="platillos-tab">
+                <div class="card">
+                    <h5 class="card-header">Platillos del restaurante</h5>
+                    <div class="card-body">
+                        <div class="form-inline">
+                            <div class="form-group col-sm-2">
+                                <div>
+                                    <label for="nombrePlatillo" class="">Nombre del platillo</label>
+                                </div>
+                                <input type="text" style="width:100%" class="form-control" id="nombrePlatillo" value="" name="nombrePlatillo">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="descripcionPlatillo" class="">Descripción</label>
+                                <input type="text" class="form-control" id="descripcionPlatillo" placeholder="Descripción del platillo">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="fotoPlatillo" class="">Foto</label>
+                                <input type="file" style="width:100%" class="form-control" id="fotoPlatillo" name="fotoPlatillo">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="btnNuevoPlatillo">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-header">
+                        Platillos agregadas
+                    </div>
+                    <div class="card-body">
+                        <div id="gridbox_platillos" style="width:100%; height:400px; background-color:white;"></div>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+                {% if restaurante._id %}
+                    <script>
+                        var id = $("#id_rest").val();
+                        var myGridPlatillos;
+                        function edit_platillo(id) {}
+
+                        function del_platillo(id_platillo) {
+                            Question("¿Desea borrar el platillo?", function () {
+                                Loading();
+                                $.get("/restaurantes/delete_platillo/" + id+"/"+id_platillo, function (data) {
+                                    Ready();
+                                    OK("Platillo borrado");
+                                    myGridPlatillos.clearAll();
+                                    myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+                                });
+                            });
+                        }
+
+                        myGridPlatillos = new dhtmlXGridObject('gridbox_platillos');
+                        myGridPlatillos.setImagePath("dhtmlx/codebase/imgs/");
+                        myGridPlatillos.setHeader("Borrar,Nombre,Descripción,Foto");
+                        myGridPlatillos.attachHeader("#cspan", "#text_filter", "#text_filter", "#cspan");
+                        myGridPlatillos.setInitWidths("50,*,*,*");
+                        myGridPlatillos.enableAutoWidth(true);
+                        myGridPlatillos.setColAlign("center,left,left,center");
+                        myGridPlatillos.setColTypes("ro,ro,ro,ro");
+                        myGridPlatillos.setColSorting("na,str,str,str");
+                        myGridPlatillos.init();
+                        myGridPlatillos.enableSmartRendering(true);
+                        myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+                        
+                    </script>
+                {% endif %}
+
+            </div>
+
 
         </div>
+        
 
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
@@ -241,6 +298,13 @@
 
 <script>
     $('#mesas-tab').on('click', function (e) {
+        if ($("#id_rest").val() == '') {
+            Warning("¡Guarde los datos generales del restaurante!");
+            e.preventDefault();
+            return false;
+        }
+    });
+    $('#platillos-tab').on('click', function (e) {
         if ($("#id_rest").val() == '') {
             Warning("¡Guarde los datos generales del restaurante!");
             e.preventDefault();
@@ -268,10 +332,38 @@
                 $("#nombreMesa").val('');
                 $("#noLugares").val('');
                 $("#descripcion_mesa").val('');
-                $("#id_rest")
                 myGridMesas.clearAll();
                 myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
                 OK("Mesa agregada");
+            } else {
+                console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
+            }
+        };
+
+        oReq.send(formData);
+    });
+
+     $('#btnNuevoPlatillo').on('click', function (e) {
+        e.preventDefault();
+
+        var nombrePlatillo = $("#nombrePlatillo").val();
+        var descripcionPlatillo = $("#descripcionPlatillo").val();
+
+        formData = new FormData(document.getElementById("fotoPlatillo"));
+        var id = $("#id_rest").val();
+        formData.append('nombrePlatillo', nombrePlatillo);
+        formData.append('descripcionPlatillo', descripcionPlatillo);
+        formData.append('id', id);
+        formData.append('fotoPlatillo', $("input[name='fotoPlatillo']")[0].files[0]);
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "/restaurantes/agregar_platillo", true);
+        oReq.onload = function (oEvent) {
+            if (oReq.status == 200) {
+                $("#nombrePlatillo").val('');
+                $("#descripcionPlatillo").val('');
+                myGridPlatillos.clearAll();
+                myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+                OK("Platillo agregado");
             } else {
                 console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");
             }

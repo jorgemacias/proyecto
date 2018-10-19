@@ -7,6 +7,12 @@ var mesaSchema = new mongoose.Schema({
     foto:{ type: String }
  });
 
+ var platilloSchema = new mongoose.Schema({ 
+    nombrePlatillo: { type: String },
+    descripcion_platillo:{ type: String },
+    foto:{ type: String }
+ });
+
 var restauranteSchema = mongoose.Schema({
     nombre: { type: String },
     categorias: { type: Array },
@@ -23,7 +29,8 @@ var restauranteSchema = mongoose.Schema({
     galeria: { type: Array },
     logotipo: {type:String},
     diasOperacion: { type: Array },
-    mesas:[mesaSchema]
+    mesas:[mesaSchema],
+    platillos:[platilloSchema],
 });
 
 

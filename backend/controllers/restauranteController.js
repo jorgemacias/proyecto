@@ -119,17 +119,7 @@ exports.restaurante_delete_get = function (req, res, next) {
     });
 
 };
-exports.delete_mesa = function (req, res, next) {
-    Restaurante.findById(req.params.idRestaurante , function (err, restaurante) {
-        restaurante.mesas.splice(req.params.idMesa, 1);
-        restaurante.save(function (err, updatedRestaurante) {
-            if (err)
-                return handleError(err);
-            res.json({ msg: updatedRestaurante._id });
-        });
-    });
 
-};
 exports.restaurante_data_get = function (req, res, next) {
     Restaurante.find({}, function (err, restaurantes) {
         console.log(restaurantes);
@@ -154,30 +144,6 @@ exports.restaurante_data_get = function (req, res, next) {
     });
 };
 
-exports.mesas_data = function (req, res, next) {
-     
-    Restaurante.findById(req.params.id , function (err, restaurante) {
-        var mesasMap=[];
-        console.log(restaurante)
-        restaurante.mesas.forEach(function (mesa,index) {
-
-            mesasMap.push({
-                id: index, data: [
-                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del_mesa(\'' + index + '\')"></i>',
-                    mesa.nombreMesa,
-                    mesa.noLugares,
-                    mesa.descripcion_mesa,
-                    '<img src="/images/mesas/'+mesa.foto+'" style="width:100px">',
-                ]
-            });
-        });
-
-        data = {
-            rows: mesasMap
-        };
-        res.json(data);
-    });
-};
 
 exports.restaurante_create_post = function (req, res) {
     var nombre_logo = "";
@@ -252,7 +218,7 @@ exports.restaurante_create_post = function (req, res) {
     }
 };
 
-exports.agregar_mesa = function (req, res,next) {
+exports.agregar_mesa = function (req, res, next) {
     console.log("dsadasd");
     var nombre_foto_mesa = "";
     if (req.files) {
@@ -285,6 +251,120 @@ exports.agregar_mesa = function (req, res,next) {
             return next(err);
 
         restaurante.mesas.push(data);
+        restaurante.save(function (err, updatedRestaurante) {
+            if (err)
+                return handleError(err);
+            res.json({ msg: updatedRestaurante._id });
+        });
+    });
+
+};
+exports.mesas_data = function (req, res, next) {
+
+    Restaurante.findById(req.params.id, function (err, restaurante) {
+        var mesasMap = [];
+        restaurante.mesas.forEach(function (mesa) {
+
+            mesasMap.push({
+                id: mesa._id, data: [
+                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del_mesa(\'' + mesa._id + '\')"></i>',
+                    mesa.nombreMesa,
+                    mesa.noLugares,
+                    mesa.descripcion_mesa,
+                    '<img src="/images/mesas/' + mesa.foto + '" style="width:100px">',
+                ]
+            });
+        });
+
+        data = {
+            rows: mesasMap
+        };
+        res.json(data);
+    });
+};
+
+exports.delete_mesa = function (req, res, next) {
+    Restaurante.findById(req.params.idRestaurante, function (err, restaurante) {
+
+        restaurante.mesas.pull(req.params.idMesa);
+        restaurante.save(function (err, updatedRestaurante) {
+            if (err)
+                return handleError(err);
+            res.json({ msg: updatedRestaurante._id });
+        });
+    });
+
+};
+
+
+exports.agregar_platillo = function (req, res, next) {
+    console.log("dsadasd");
+    var nombre_fotoPlatillo = "";
+    if (req.files) {
+        let logo = req.files.fotoPlatillo;
+        if (logo) {
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < 5; i++)
+                nombre_fotoPlatillo += possible.charAt(Math.floor(Math.random() * possible.length));
+            logo.mv('C:\\Users\\IMUG\\curso\\equipo2\\proyecto\\backend\\public\\images\\platillos\\' + nombre_fotoPlatillo + '.jpg', function (err) {
+                if (err)
+                    return res.status(500).send(err);
+            });
+        }
+
+    }
+
+    var data = {
+        nombrePlatillo: req.body.nombrePlatillo,
+        noLugares: req.body.noLugares,
+        descripcionPlatillo: req.body.descripcionPlatillo
+    };
+
+    if (nombre_fotoPlatillo != "") {
+        data = helper.addValueInObject(data, "foto", nombre_fotoPlatillo + '.jpg')
+    }
+
+    Restaurante.findById(req.body.id, function (err, restaurante) {
+        if (err)
+            return next(err);
+
+        restaurante.platillos.push(data);
+        restaurante.save(function (err, updatedRestaurante) {
+            if (err)
+                return handleError(err);
+            res.json({ msg: updatedRestaurante._id });
+        });
+    });
+
+};
+exports.platillos_data = function (req, res, next) {
+
+    Restaurante.findById(req.params.id, function (err, restaurante) {
+        var platillosMap = [];
+        restaurante.platillos.forEach(function (platillo) {
+
+            platillosMap.push({
+                id: platillo._id, data: [
+                    '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del_platillo(\'' + platillo._id + '\')"></i>',
+                    platillo.nombrePlatillo,
+                    platillo.descripcion_platillo,
+                    '<img src="/images/platillos/' + platillo.foto + '" style="width:100px">',
+                ]
+            });
+        });
+
+        data = {
+            rows: platillosMap
+        };
+        res.json(data);
+    });
+};
+
+exports.delete_platillo = function (req, res, next) {
+    Restaurante.findById(req.params.idRestaurante, function (err, restaurante) {
+
+        restaurante.platillos.pull(req.params.idPlatillo);
         restaurante.save(function (err, updatedRestaurante) {
             if (err)
                 return handleError(err);
