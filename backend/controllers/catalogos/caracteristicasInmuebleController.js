@@ -1,8 +1,11 @@
 var caracteristicaInmueble = require('../../models/catalogos/caracteristicas_inmueble');
 
 exports.lista = function (req, res, next) {
-
+    if (req.session.logueado)
     res.render('catalogos/caracteristicas_inmueble/lista', { title: 'Opciones de inmueble',session:req.session });
+    else
+        res.redirect('/');
+    
 
 };
 

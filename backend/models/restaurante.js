@@ -9,7 +9,7 @@ var mesaSchema = new mongoose.Schema({
 
  var platilloSchema = new mongoose.Schema({ 
     nombrePlatillo: { type: String },
-    descripcion_platillo:{ type: String },
+    descripcionPlatillo:{ type: String },
     foto:{ type: String }
  });
 

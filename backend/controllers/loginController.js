@@ -15,7 +15,7 @@ exports.login_post = function (req, res, next) {
         if (err)
             throw err;
         
-        valido=user.comparePassword(req.body.password);
+        valido=user ?user.comparePassword(req.body.password):false;
         
         if (valido === true){
             req.session.logueado=true;

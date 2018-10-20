@@ -93,7 +93,7 @@
             </div>
             <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
                 <div class="card">
-                    <h5 class="card-header">Seleccione las características de su restaurante</h5>
+                    <h5 class="card-header">Características</h5>
                     <div class="card-body">
 
                         {% for caracteristica_inmueble in caracteristicas_inmueble %}
@@ -185,39 +185,6 @@
                     </div>
                     <div class="card-footer"></div>
                 </div>
-                {% if restaurante._id %}
-                    <script>
-                        var id = $("#id_rest").val();
-                        var myGridMesas;
-                        function edit_mesa(id) {}
-
-                        function del_mesa(id_mesa) {
-                            Question("¿Desea borrar la mesa?", function () {
-                                Loading();
-                                $.get("/restaurantes/delete_mesa/" + id+"/"+id_mesa, function (data) {
-                                    Ready();
-                                    OK("Mesa borrada");
-                                    myGridMesas.clearAll();
-                                    myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
-                                });
-                            });
-                        }
-
-                        myGridMesas = new dhtmlXGridObject('gridbox_mesas');
-                        myGridMesas.setImagePath("dhtmlx/codebase/imgs/");
-                        myGridMesas.setHeader("Borrar,Nombre,Lugares,Descripción,Foto");
-                        myGridMesas.attachHeader("#cspan", "#text_filter", "#text_filter", "#text_filter", "#cspan");
-                        myGridMesas.setInitWidths("50,*,*,*,*");
-                        myGridMesas.enableAutoWidth(true);
-                        myGridMesas.setColAlign("center,left,left,left,center");
-                        myGridMesas.setColTypes("ro,ro,ro,ro,ro");
-                        myGridMesas.setColSorting("na,str,str,str,str");
-                        myGridMesas.init();
-                        myGridMesas.enableSmartRendering(true);
-                        myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
-                        
-                    </script>
-                {% endif %}
 
             </div>
             <div class="tab-pane fade" id="platillos" role="tabpanel" aria-labelledby="platillos-tab">
@@ -252,51 +219,76 @@
                     </div>
                     <div class="card-footer"></div>
                 </div>
-                {% if restaurante._id %}
-                    <script>
-                        var id = $("#id_rest").val();
-                        var myGridPlatillos;
-                        function edit_platillo(id) {}
-
-                        function del_platillo(id_platillo) {
-                            Question("¿Desea borrar el platillo?", function () {
-                                Loading();
-                                $.get("/restaurantes/delete_platillo/" + id+"/"+id_platillo, function (data) {
-                                    Ready();
-                                    OK("Platillo borrado");
-                                    myGridPlatillos.clearAll();
-                                    myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
-                                });
-                            });
-                        }
-
-                        myGridPlatillos = new dhtmlXGridObject('gridbox_platillos');
-                        myGridPlatillos.setImagePath("dhtmlx/codebase/imgs/");
-                        myGridPlatillos.setHeader("Borrar,Nombre,Descripción,Foto");
-                        myGridPlatillos.attachHeader("#cspan", "#text_filter", "#text_filter", "#cspan");
-                        myGridPlatillos.setInitWidths("50,*,*,*");
-                        myGridPlatillos.enableAutoWidth(true);
-                        myGridPlatillos.setColAlign("center,left,left,center");
-                        myGridPlatillos.setColTypes("ro,ro,ro,ro");
-                        myGridPlatillos.setColSorting("na,str,str,str");
-                        myGridPlatillos.init();
-                        myGridPlatillos.enableSmartRendering(true);
-                        myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
-                        
-                    </script>
-                {% endif %}
+                <script></script>
 
             </div>
 
-
         </div>
-        
 
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
 </div>
 
 <script>
+    var id = $("#id_rest").val();
+    var myGridPlatillos;
+    function edit_platillo(id) {}
+
+    function del_platillo(id_platillo) {
+        Question("¿Desea borrar el platillo?", function () {
+            Loading();
+            $.get("/restaurantes/delete_platillo/" + id + "/" + id_platillo, function (data) {
+                Ready();
+                OK("Platillo borrado");
+                myGridPlatillos.clearAll();
+                myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+            });
+        });
+    }
+
+    myGridPlatillos = new dhtmlXGridObject('gridbox_platillos');
+    myGridPlatillos.setImagePath("dhtmlx/codebase/imgs/");
+    myGridPlatillos.setHeader("Borrar,Nombre,Descripción,Foto");
+    myGridPlatillos.attachHeader("#cspan", "#text_filter", "#text_filter", "#cspan");
+    myGridPlatillos.setInitWidths("50,*,*,*");
+    myGridPlatillos.enableAutoWidth(true);
+    myGridPlatillos.setColAlign("center,left,left,center");
+    myGridPlatillos.setColTypes("ro,ro,ro,ro");
+    myGridPlatillos.setColSorting("na,str,str,str");
+    myGridPlatillos.init();
+    myGridPlatillos.enableSmartRendering(true);
+    {% if restaurante._id %}
+    myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+    {% endif %}
+    var myGridMesas;
+    function edit_mesa(id) {}
+
+    function del_mesa(id_mesa) {
+        Question("¿Desea borrar la mesa?", function () {
+            Loading();
+            $.get("/restaurantes/delete_mesa/" + id + "/" + id_mesa, function (data) {
+                Ready();
+                OK("Mesa borrada");
+                myGridMesas.clearAll();
+                myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+            });
+        });
+    }
+
+    myGridMesas = new dhtmlXGridObject('gridbox_mesas');
+    myGridMesas.setImagePath("dhtmlx/codebase/imgs/");
+    myGridMesas.setHeader("Borrar,Nombre,Lugares,Descripción,Foto");
+    myGridMesas.attachHeader("#cspan", "#text_filter", "#text_filter", "#text_filter", "#cspan");
+    myGridMesas.setInitWidths("50,*,*,*,*");
+    myGridMesas.enableAutoWidth(true);
+    myGridMesas.setColAlign("center,left,left,left,center");
+    myGridMesas.setColTypes("ro,ro,ro,ro,ro");
+    myGridMesas.setColSorting("na,str,str,str,str");
+    myGridMesas.init();
+    myGridMesas.enableSmartRendering(true);
+    {% if restaurante._id %}
+    myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+    {% endif %}
     $('#mesas-tab').on('click', function (e) {
         if ($("#id_rest").val() == '') {
             Warning("¡Guarde los datos generales del restaurante!");
@@ -319,7 +311,6 @@
         var descripcion_mesa = $("#descripcion_mesa").val();
 
         formData = new FormData(document.getElementById("foto_mesa"));
-        var id = $("#id_rest").val();
         formData.append('nombreMesa', nombreMesa);
         formData.append('noLugares', noLugares);
         formData.append('descripcion_mesa', descripcion_mesa);
@@ -343,7 +334,7 @@
         oReq.send(formData);
     });
 
-     $('#btnNuevoPlatillo').on('click', function (e) {
+    $('#btnNuevoPlatillo').on('click', function (e) {
         e.preventDefault();
 
         var nombrePlatillo = $("#nombrePlatillo").val();
@@ -379,13 +370,15 @@
         oData = new FormData(form);
 
         var oReq = new XMLHttpRequest();
+        oReq.responseType = 'json';
         oReq.open("POST", $(this).attr('action'), true);
         oReq.onload = function (oEvent) {
+
             if (oReq.status == 200) {
-                document.getElementById("form-restaurante").reset();
+                id=this.response.msg;
+                $("#id_rest").val(this.response.msg);
                 myGrid.clearAll();
                 myGrid.load("/restaurantes/data", "json");
-                CloseModal();
                 OK("Guardado");
             } else {
                 console.log("Error " + oReq.status + " occurred uploading your file.<br \/>");

@@ -12,7 +12,11 @@ var condiciones = require('../models/catalogos/condiciones');
 var formasPago = require('../models/catalogos/formas_pagos');
 
 exports.lista = function (req, res, next) {
-    res.render('restaurantes/lista', { title: 'Lista de restaurantes', session: req.session });
+    if (req.session.logueado)
+        res.render('restaurantes/lista', { title: 'Lista de restaurantes', session: req.session });
+    else
+        res.redirect('/');
+
 };
 
 exports.restaurante_form_get = function (req, res, next) {
@@ -348,7 +352,7 @@ exports.platillos_data = function (req, res, next) {
                 id: platillo._id, data: [
                     '<i class="fa fa-trash-o" style="font-size:15px;" onclick="del_platillo(\'' + platillo._id + '\')"></i>',
                     platillo.nombrePlatillo,
-                    platillo.descripcion_platillo,
+                    platillo.descripcionPlatillo,
                     '<img src="/images/platillos/' + platillo.foto + '" style="width:100px">',
                 ]
             });
