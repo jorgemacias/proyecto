@@ -11,7 +11,13 @@ var caracteristicasServicios = require('../models/catalogos/caracteristicas_serv
 var condiciones = require('../models/catalogos/condiciones');
 var formasPago = require('../models/catalogos/formas_pagos');
 
+const googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyDAKgM8G41K3GDGYlpUvLCA2FRBJw14wJg',
+    Promise: Promise
+});
+
 exports.lista = function (req, res, next) {
+    
     if (req.session.logueado)
         res.render('restaurantes/lista', { title: 'Lista de restaurantes', session: req.session });
     else
@@ -189,6 +195,7 @@ exports.restaurante_create_post = function (req, res) {
         caracteristicasAreas: req.body.caracteristicasAreas,
         caracteristicasAceptacion: req.body.caracteristicasAceptacion,
         caracteristicasInmueble: req.body.caracteristicasInmueble,
+        coordenadas:req.body.coordenadas
     };
 
     if (nombre_logo != "") {
@@ -377,3 +384,4 @@ exports.delete_platillo = function (req, res, next) {
     });
 
 };
+

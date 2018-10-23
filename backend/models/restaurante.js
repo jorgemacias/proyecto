@@ -31,6 +31,7 @@ var restauranteSchema = mongoose.Schema({
     diasOperacion: { type: Array },
     mesas:[mesaSchema],
     platillos:[platilloSchema],
+    coordenadas: { type: String },
 });
 
 

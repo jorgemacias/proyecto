@@ -23,72 +23,96 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="generales" role="tabpanel" aria-labelledby="generales-tab">
-                <div class="form-group mb-2">
-                    <label for="nombreRestaurante">Nombre del restaurante</label>
-                    <input type="text" class="form-control" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:" " }}" name="nombre" placeholder="Nombre del restaurante" required="required">
-                </div>
-                <div class="form-group mb-2">
-                    <label for="descripcion">Descripción</label>
-                    <textarea class="form-control" id="descripcion" name="descripcion" placeholder="" required="required" rows="3">{{ restaurante.descripcion ? restaurante.descripcion:"" }}</textarea>
-                </div>
-                <div class="form-group mb-2">
-                    <label for="Logotipo">Logotipo</label>
-                    {% if restaurante.logotipo %}
-                        {% if restaurante.logotipo != "" %}
-                            <img width="300" height="100" src="/images/logos/{{ restaurante.logotipo }}">
-                        {% endif %}
-                    {% endif %}
-                    <input type="file" class="form-control" id="Logotipo" name="logo">
-                </div>
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label">Categorías de restaurante</label>
-                    </div>
-                    {% for categoria in categorias %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="categorias" type="checkbox" {% if categoria._id in restaurante.categorias %} {{'checked'}} {% endif %} id="categoria-{{categoria._id}}" value="{{categoria._id}}">
-                            <label class="form-check-label" for="categoria-{{categoria._id}}">{{categoria.nombre}}</label>
+                <div class="card">
+                    <h5 class="card-header">Datos generales del restaurante</h5>
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            <label for="nombreRestaurante">Nombre del restaurante</label>
+                            <input type="text" class="form-control" id="nombreRestauante" value="{{ restaurante.nombre ? restaurante.nombre:" " }}" name="nombre" placeholder="Nombre del restaurante" required="required">
                         </div>
-                    {% endfor %}
-                </div>
-                <div class="form-group mb-2">
-                    <div>
-                        <label class="label">Tipos de comida ofertados</label>
-                    </div>
-                    {% for tipo in tipos %}
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="tipos" type="checkbox" {% if tipo._id in restaurante.tiposComida %} {{'checked'}} {% endif %} id="tipo-{{tipo._id}}" value="{{tipo._id}}">
-                            <label class="form-check-label" for="tipo-{{tipo._id}}">{{tipo.nombre}}</label>
+                        <div class="form-group mb-2">
+                            <label for="descripcion">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="" required="required" rows="3">{{ restaurante.descripcion ? restaurante.descripcion:"" }}</textarea>
                         </div>
-                    {% endfor %}
+                        <div class="form-group mb-2">
+                            <label for="Logotipo">Logotipo</label>
+                            {% if restaurante.logotipo %}
+                                {% if restaurante.logotipo != "" %}
+                                    <img width="300" height="100" src="/images/logos/{{ restaurante.logotipo }}">
+                                {% endif %}
+                            {% endif %}
+                            <input type="file" class="form-control" id="Logotipo" name="logo">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-2">
-                    <label for="nombreRestaurante">Nombre de calle</label>
-                    <input type="text" class="form-control" id="calle" value="{{ restaurante.domicilio.calle ? restaurante.domicilio.calle:" " }}" name="calle" placeholder="" required="required">
+
+                <div class="card">
+                    <h5 class="card-header">Categorías de restaurante</h5>
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            {% for categoria in categorias %}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="categorias" type="checkbox" {% if categoria._id in restaurante.categorias %} {{'checked'}} {% endif %} id="categoria-{{categoria._id}}" value="{{categoria._id}}">
+                                    <label class="form-check-label" for="categoria-{{categoria._id}}">{{categoria.nombre}}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-2">
-                    <label for="numero">Número</label>
-                    <input type="text" class="form-control" id="numero" value="{{ restaurante.domicilio.numero ? restaurante.domicilio.numero:" " }}" name="numero" placeholder="calle" required="required">
+                <div class="card">
+                    <h5 class="card-header">Tipos de comida ofertados</h5>
+                    <div class="card-body">
+                        <div class="form-group mb-2">
+                            {% for tipo in tipos %}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" name="tipos" type="checkbox" {% if tipo._id in restaurante.tiposComida %} {{'checked'}} {% endif %} id="tipo-{{tipo._id}}" value="{{tipo._id}}">
+                                    <label class="form-check-label" for="tipo-{{tipo._id}}">{{tipo.nombre}}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group mb-2">
-                    <label for="cp">Codigo postal</label>
-                    <input type="text" class="form-control" id="cp" value="{{ restaurante.domicilio.cp ? restaurante.domicilio.cp:" " }}" name="cp" placeholder="" required="required">
-                </div>
-                <div class="form-group mb-2">
-                    <label for="colonia">Colonia</label>
-                    <input type="text" class="form-control" id="colonia" value="{{ restaurante.domicilio.colonia ? restaurante.domicilio.colonia:" " }}" name="colonia" placeholder="" required="required">
-                </div>
-                <div class="form-group mb-2">
-                    <label for="Ciudad">Ciudad</label>
-                    <input type="text" class="form-control" id="Ciudad" value="{{ restaurante.domicilio.ciudad ? restaurante.domicilio.ciudad:" " }}" name="ciudad" placeholder="" required="required">
-                </div>
-                <div class="form-group mb-2">
-                    <label for="Estado">Estado</label>
-                    <input type="text" class="form-control" id="Estado" value="{{ restaurante.domicilio.estado ? restaurante.domicilio.estado:" " }}" name="estado" placeholder="" required="required">
-                </div>
-                <div class="form-group mb-2">
-                    <label for="Pais">Pais</label>
-                    <input type="text" class="form-control" id="Pais" value="{{ restaurante.domicilio.pais ? restaurante.domicilio.pais:" " }}" name="pais" placeholder="" required="required">
+
+                <div class="row col-12">
+
+                    <div class="card col-6">
+                        <h5 class="card-header">Domicilio</h5>
+                        <div class="card-body">
+                            <div class="form-group mb-2">
+                                <label for="Pais">Pais</label>
+                                <input type="text" class="form-control address" id="Pais" value="{{ restaurante.domicilio.pais ? restaurante.domicilio.pais:" " }}" name="pais" placeholder="" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="Estado">Estado</label>
+                                <input type="text" class="form-control address" id="Estado" value="{{ restaurante.domicilio.estado ? restaurante.domicilio.estado:" " }}" name="estado" placeholder="" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="Ciudad">Ciudad</label>
+                                <input type="text" class="form-control address" id="Ciudad" value="{{ restaurante.domicilio.ciudad ? restaurante.domicilio.ciudad:" " }}" name="ciudad" placeholder="" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="colonia">Colonia</label>
+                                <input type="text" class="form-control address" id="colonia" value="{{ restaurante.domicilio.colonia ? restaurante.domicilio.colonia:" " }}" name="colonia" placeholder="" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="nombreRestaurante">Nombre de calle</label>
+                                <input type="text" class="form-control address" id="calle" value="{{ restaurante.domicilio.calle ? restaurante.domicilio.calle:" " }}" name="calle" placeholder="" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="numero">Número</label>
+                                <input type="text" class="form-control address" id="numero" value="{{ restaurante.domicilio.numero ? restaurante.domicilio.numero:" " }}" name="numero" placeholder="calle" required="required">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="cp">Codigo postal</label>
+                                <input type="text" class="form-control address" id="cp" value="{{ restaurante.domicilio.cp ? restaurante.domicilio.cp:" " }}" name="cp" placeholder="" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" value="" id="Coordenadas" name="Coordenadas">
+                    <div class="card col-6">
+                        <h5 class="card-header">Ubicación</h5>
+                        <div class="card-body" id="map"></div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="caracteristicas" role="tabpanel" aria-labelledby="caracteristicas-tab">
@@ -228,7 +252,7 @@
         <button type="submit" class="btn btn-success mb-2">Guardar</button>
     </form>
 </div>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAKgM8G41K3GDGYlpUvLCA2FRBJw14wJg&libraries=places&language=es&region=MX&callback=initMap" async="async" defer="defer"></script>
 <script>
     var id = $("#id_rest").val();
     var myGridPlatillos;
@@ -258,7 +282,7 @@
     myGridPlatillos.init();
     myGridPlatillos.enableSmartRendering(true);
     {% if restaurante._id %}
-    myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
+        myGridPlatillos.load("/restaurantes/platillos_data/" + id, "json");
     {% endif %}
     var myGridMesas;
     function edit_mesa(id) {}
@@ -287,7 +311,7 @@
     myGridMesas.init();
     myGridMesas.enableSmartRendering(true);
     {% if restaurante._id %}
-    myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
+        myGridMesas.load("/restaurantes/mesas_data/" + id, "json");
     {% endif %}
     $('#mesas-tab').on('click', function (e) {
         if ($("#id_rest").val() == '') {
@@ -375,7 +399,7 @@
         oReq.onload = function (oEvent) {
 
             if (oReq.status == 200) {
-                id=this.response.msg;
+                id = this.response.msg;
                 $("#id_rest").val(this.response.msg);
                 myGrid.clearAll();
                 myGrid.load("/restaurantes/data", "json");
@@ -387,4 +411,102 @@
 
         oReq.send(oData);
     });
+
+    function initMap() {
+        //        var map_master= new google.maps();
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 17,
+            center: {
+                lat: 21.0326989,
+                lng: -101.2514445
+            }
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        $(".address").on('change', function () {
+            geocodeAddress(geocoder, map);
+        });
+        {% if restaurante._id %}
+            var myCenter = new google.maps.LatLng({{restaurante.coordenadas}});
+        {% else %}
+            var myCenter = new google.maps.LatLng(21.0326989, -101.2514445);
+        {% endif %}
+
+        var marker = new google.maps.Marker({position: myCenter, url: '/', draggable: true, animation: google.maps.Animation.DROP});
+
+        google.maps.event.addListener(marker, "click", function () {
+            console.log(this.getPosition());
+            infowindow.setContent(this.html);
+            infowindow.open(map, this);
+            map.setCenter(this.getPosition());
+            map.setZoom(17);
+        });
+
+        google.maps.event.addListener(marker, "dragend", function () {
+            console.log(this.getPosition());
+            map.setCenter(this.getPosition());
+            map.setZoom(17);
+        });
+
+        marker.setMap(map);
+        markers.push(marker);
+
+    }
+    var markers = [];
+    function geocodeAddress(geocoder, resultsMap) {
+        var estado = $("#Estado").val();
+        var pais = $("#Pais").val();
+        var ciudad = $("#Ciudad").val();
+        var colonia = $("#colonia").val();
+        var numero = $("#numero").val();
+        var calle = $("#calle").val();
+        var address = estado + ' ' + pais + ' ' + ciudad + ' ' + colonia + ' ' + calle + ' ' + numero;
+        //        alert(address)
+        geocoder.geocode({
+            'address': address
+        }, function (results, status) {
+            if (status === 'OK') {
+                deleteMarkers();
+                setTimeout(function () {
+                    deleteMarkers();
+                    resultsMap.setCenter(results[0].geometry.location);
+                    $("#Coordenadas").val(results[0].geometry.location.lat() + ',' + results[0].geometry.location.lng());
+                    var marker = new google.maps.Marker({map: resultsMap, position: results[0].geometry.location, draggable: true, animation: google.maps.Animation.DROP});
+                    markers.push(marker);
+                }, 1000);
+
+            } else {
+                console.log('Lugar no encontrado por la siguiente razón: ' + status);
+            }
+        });
+    }
+
+    // Adds a marker to the map and push to the array.
+    function addMarker(location) {
+        var marker = new google.maps.Marker({position: location, map: map});
+        markers.push(marker);
+    }
+
+    // Sets the map on all markers in the array.
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    function clearMarkers() {
+        setMapOnAll(null);
+    }
+
+    // Shows any markers currently in the array.
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
 </script>
