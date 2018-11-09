@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
 
 
 var loginRouter = require('./routes/login');
@@ -20,7 +21,7 @@ var session = require('express-session');
 
 // Se crea la sesion del cliente
 app.use(fileUpload());
-app.use(session({secret: 'pablitoclavounclavitoenlacalvadeuncalvito', cookie: {maxAge: 60000}}))
+app.use(session({secret: 'pablitoclavounclavitoenlacalvadeuncalvito', cookie: {maxAge: null}}))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'twig');

@@ -54,44 +54,53 @@
         <div class="wrapper">
 
             {% if session.logueado %}
-            <!-- Navbar -->
-            <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
-                <!-- Left navbar links -->
-                <ul class="navbar-nav">
 
-                    <li class="nav-item">
-                        <a href="/restaurantes" class="nav-link">Restaurantes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/categorias_restaurante" class="nav-link">Categorias de restaurante</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/tipos_comida" class="nav-link">Tipos de comida</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/caracteristicas_venta" class="nav-link">Opciones de venta</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/caracteristicas_inmueble" class="nav-link">Cáracteristicas del inmueble</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/caracteristicas_servicios" class="nav-link">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/condiciones" class="nav-link">Condiciones</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/catalogos/formas_pagos" class="nav-link">Formas de pago</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/users" class="nav-link">Usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/users/logout" class="nav-link">Salir</a>
-                    </li>
-                </ul>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="/">CLICK4EAT</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-            </nav>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/restaurantes">Restaurantes</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Catálogos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/catalogos/categorias_restaurante">Categorias de restaurante</a>
+                                    <a class="dropdown-item" href="/catalogos/tipos_comida">Tipos de comida</a>
+                                    <a class="dropdown-item" href="/catalogos/caracteristicas_venta">Opciones de venta</a>
+                                    <a class="dropdown-item" href="/catalogos/caracteristicas_inmueble">Carácteristicas del inmueble</a>
+                                    <a class="dropdown-item" href="/catalogos/caracteristicas_servicios">Opciones de servicio</a>
+                                    <a class="dropdown-item" href="/catalogos/condiciones">Condiciones de venta</a>
+                                    <a class="dropdown-item" href="/catalogos/formas_pagos">Formas de pago</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Configuración
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/users">Usuarios</a>
+
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users/logout">Salir</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Navbar -->
+            
 
             {% endif %}
             <div class="content-wrapper">
